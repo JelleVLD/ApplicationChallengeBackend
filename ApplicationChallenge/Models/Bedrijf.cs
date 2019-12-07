@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ApplicationChallenge.Models
+{
+    public class Bedrijf
+    {
+        [Key]
+        public long Id { get; set; }
+        public string Naam { get; set; }
+        public string Adres { get; set; }
+        public string Biografie { get; set; }
+        public string Foto { get; set; }
+        public ICollection<Review> Reviews { get; set; }
+        public ICollection<Opdracht> Opdrachten { get; set; }
+
+    }
+}
