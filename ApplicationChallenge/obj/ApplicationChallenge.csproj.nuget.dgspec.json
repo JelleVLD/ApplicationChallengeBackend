@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\3 ITF\\Angular\\ApplicationChallenge\\ApplicationChallenge\\ApplicationChallenge.csproj": {}
+    "D:\\school\\Angular\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj": {}
   },
   "projects": {
-    "C:\\3 ITF\\Angular\\ApplicationChallenge\\ApplicationChallenge\\ApplicationChallenge.csproj": {
+    "D:\\school\\Angular\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\3 ITF\\Angular\\ApplicationChallenge\\ApplicationChallenge\\ApplicationChallenge.csproj",
+        "projectUniqueName": "D:\\school\\Angular\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj",
         "projectName": "ApplicationChallenge",
-        "projectPath": "C:\\3 ITF\\Angular\\ApplicationChallenge\\ApplicationChallenge\\ApplicationChallenge.csproj",
-        "packagesPath": "C:\\Users\\Eigenaar\\.nuget\\packages\\",
-        "outputPath": "C:\\3 ITF\\Angular\\ApplicationChallenge\\ApplicationChallenge\\obj\\",
+        "projectPath": "D:\\school\\Angular\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj",
+        "packagesPath": "C:\\Users\\agitb\\.nuget\\packages\\",
+        "outputPath": "D:\\school\\Angular\\ApplicationChallengeBackend\\ApplicationChallenge\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Eigenaar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\agitb\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -57,6 +57,10 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.2.4, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
