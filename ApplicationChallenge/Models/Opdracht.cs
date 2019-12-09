@@ -13,6 +13,7 @@ namespace ApplicationChallenge.Models
         public string Titel { get; set; }
         public string Omschrijving { get; set; }
         public string Locatie { get; set; }
+        public long BedrijfId { get; set; }
         public ICollection<Maker> Makers { get; set; }
         public Bedrijf Bedrijf { get; set; }
 

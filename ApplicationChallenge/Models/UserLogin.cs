@@ -14,8 +14,12 @@ namespace ApplicationChallenge.Models
         public string Password { get; set; }
         public long MakerId { get; set; }
         public long BedrijfId { get; set; }
+        public long UserTypeId { get; set; }
+        public long AdminId { get; set; }
         public Maker Maker { get; set; }
         public Bedrijf Bedrijf { get; set; }
+        public Admin Admin { get; set; }
+        public UserType UserType{get;set;}
 
     }
 }

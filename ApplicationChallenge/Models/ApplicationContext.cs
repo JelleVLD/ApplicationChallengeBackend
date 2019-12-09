@@ -22,6 +22,8 @@ namespace ApplicationChallenge.Models
         public DbSet<SkillMaker> SkillMakers { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<UserLogin> UserLogins { get; set; }
+        public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -34,7 +36,9 @@ namespace ApplicationChallenge.Models
             modelBuilder.Entity<Skill>().ToTable("Skill");
             modelBuilder.Entity<SkillMaker>().ToTable("SkillMaker");
             modelBuilder.Entity<Tag>().ToTable("Tag");
-            modelBuilder.Entity<UserLogin>().ToTable("UserLogin");
+
+            modelBuilder.Entity<UserType>().ToTable("UserType");
+            modelBuilder.Entity<Admin>().ToTable("Admin");
 
         }
 

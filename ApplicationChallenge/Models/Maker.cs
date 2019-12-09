@@ -16,7 +16,7 @@ namespace ApplicationChallenge.Models
         public string Email { get; set; }
         public DateTime GeboorteDatum { get; set; }
         public string Biografie { get; set; }
-        public string LinkedInLinkl { get; set; }
+        public string LinkedInLink { get; set; }
         public int Ervaring { get; set; }
         public string GsmNr { get; set; }
         public string CV { get; set; }

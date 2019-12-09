@@ -10,6 +10,148 @@ namespace ApplicationChallenge.Models
         public static void Initialize(ApplicationContext context)
         {
             context.Database.EnsureCreated();
+            if (context.UserTypes.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.UserTypes.AddRange(
+                                new UserType {Id=1, Soort="Admin" },
+                                new UserType { Id = 2, Soort = "Maker" },
+                                new UserType { Id = 3, Soort = "Bedrijf" }
+                                );
+            }
+            if (context.Admins.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.Admins.AddRange(
+                                new Admin{Voornaam="De",Achternaam="Admin"}
+                                );
+            }
+            if (context.Skills.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.Skills.AddRange(
+                                new Skill { Naam="Javascript" },
+                                 new Skill { Naam = ".Net" },
+                                  new Skill { Naam = "HTML5" },
+                                   new Skill { Naam = "Java" }
+                                );
+            }
+            if (context.Bedrijven.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.Bedrijven.AddRange(
+                                new Bedrijf { Naam="GrassHopper",Adres= "Veldkant 33b, 2550 Kontich",Biografie="Grasshopper Academy",Foto="Grasshopper.jpg" }
+                                );
+            }
+            if (context.Makers.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.Makers.AddRange(
+                                new Maker { Nickname = "Student123", Voornaam = "Jelle", Achternaam = "Van Langendonck", LinkedInLink = "https://www.linkedin.com/in/jelle-van-langendonck/", Email = "r0705177@student.thomasmore.be", Ervaring = 3, GeboorteDatum = DateTime.Parse("13/11/1998"),GsmNr="+32494692400",Biografie="Ik ben Jelle",Foto="jelle.jpg",CV="cv.pdf"}
+                                );
+            }
+            if (context.Bedrijven.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.Bedrijven.AddRange(
+                                new Bedrijf { Naam = "GrassHopper", Adres = "Veldkant 33b, 2550 Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
+                                );
+            }
+            if (context.UserLogins.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.UserLogins.AddRange(
+                                new UserLogin { Username="Admin",Password="Admin1",UserTypeId=1,AdminId=1 },
+                                new UserLogin { Username = "Student", Password = "Student1", UserTypeId =2, MakerId = 1 },
+                                new UserLogin { Username = "Bedrijf", Password = "Bedrijf1", UserTypeId = 3,BedrijfId = 1 }
+                                );
+            }
+            if (context.Opdrachten.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.Opdrachten.AddRange(
+                                new Opdracht {BedrijfId=1,Titel="Application Challenge",Omschrijving="Dit is een Challenge voor de studenten van Thomas More.",Locatie= "Kleinhoefstraat 4, 2440 Geel" }
+                                );
+            }
+            if (context.Tags.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.Tags.AddRange(
+                                new Tag {Naam=".NET"},
+                                new Tag { Naam = "JavaScript" },
+                                new Tag { Naam = "Hackathon" },
+                                new Tag { Naam = "Angular" }
+                                );
+            }
+            if (context.SkillMakers.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.SkillMakers.AddRange(
+                                new SkillMaker { MakerId=1,SkillId=1},
+                                new SkillMaker { MakerId=1,SkillId=2}
+                                );
+            }
+            if (context.Reviews.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.Reviews.AddRange(
+                                new Review { StudentId = 1, ReviewTekst = "Goede Samenwerking, Vlotte ondersteuning", NaarBedrijf = true, BedrijfId = 1,Score=4 },
+                                new Review { StudentId = 1, ReviewTekst = "Minimalistisch Design, Tijdige Upload", NaarBedrijf = false, BedrijfId = 1, Score =5 }
+                                ) ;
+            }
+            if (context.OpdrachtTags.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.OpdrachtTags.AddRange(
+                                new OpdrachtTag { OpdrachtId=1,TagId=1}
+                                );
+            }
+            if (context.BedrijfTags.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.BedrijfTags.AddRange(
+                                new BedrijfTag { BedrijfId = 1, TagId = 1 }
+                                );
+            }
         }
     }
 }
