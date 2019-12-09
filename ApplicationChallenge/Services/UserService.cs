@@ -46,9 +46,5 @@ namespace ApplicationChallenge.Services
             return user;
         }
 
-        UserLogin IUserService.Authenticate(string username, string password)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
