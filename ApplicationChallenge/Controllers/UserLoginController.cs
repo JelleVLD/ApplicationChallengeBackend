@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
+using ApplicationChallenge.Services;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -14,12 +15,21 @@ namespace ApplicationChallenge.Controllers
     public class UserLoginController : ControllerBase
     {
         private readonly ApplicationContext _context;
+        public IUserService _userService;
 
-        public UserLoginController(ApplicationContext context)
+        public UserLoginController(ApplicationContext context, IUserService UserService)
         {
             _context = context;
+            _userService = UserService;
         }
-
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate([FromBody]UserLogin userParam)
+        {
+            var gebruiker = _userService.Authenticate(userParam.Username, userParam.Password);
+            if (gebruiker == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+            return Ok(gebruiker);
+        }
         // GET: api/UserLogin
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserLogin>>> GetUserLogins()

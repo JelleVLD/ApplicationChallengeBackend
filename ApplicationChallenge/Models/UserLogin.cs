@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +17,8 @@ namespace ApplicationChallenge.Models
         public long BedrijfId { get; set; }
         public long UserTypeId { get; set; }
         public long AdminId { get; set; }
+        [NotMapped]
+        public string Token { get; set; }
         public Maker Maker { get; set; }
         public Bedrijf Bedrijf { get; set; }
         public Admin Admin { get; set; }
