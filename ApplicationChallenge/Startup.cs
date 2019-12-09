@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ApplicationChallenge.Services;
+using ApplicationChallenge.Handlers;
 
 namespace ApplicationChallenge
 {
@@ -37,6 +38,8 @@ namespace ApplicationChallenge
             services.AddCors(o => o.AddPolicy("MyPolicy", builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
             services.AddDbContext<ApplicationContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddTransient<IImageHandler, ImageHandler>();
+            services.AddTransient<IImageWriter,ImageWriter>();
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
             var appSettings = appSettingsSection.Get<AppSettings>();
@@ -87,6 +90,7 @@ namespace ApplicationChallenge
                 app.UseHsts();
             }
             app.UseCors("MyPolicy");
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
