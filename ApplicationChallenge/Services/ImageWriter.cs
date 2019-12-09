@@ -50,7 +50,7 @@ namespace ApplicationChallenge.Services
                 var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
                 fileName = Guid.NewGuid().ToString() + extension; //Create a new Name 
                                                                   //for the file due to security reasons.
-                var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", fileName);
 
                 using (var bits = new FileStream(path, FileMode.Create))
                 {
