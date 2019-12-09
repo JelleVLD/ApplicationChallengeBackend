@@ -23,9 +23,14 @@ namespace ApplicationChallenge.Services
         }
         public UserLogin Authenticate(string username, string password)
         {
-            var user = _apiContext.UserLogins.SingleOrDefault(x => x.Username == username && x.Password == password);
+            var user = _apiContext
+                .UserLogins
+                .SingleOrDefault(x => x.Username == username && x.Password == password);
+
             if (user == null)
                 return null;
+
+            var userType = _apiContext.UserTypes.SingleOrDefault(x => x.Id == user.UserTypeId);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -34,7 +39,8 @@ namespace ApplicationChallenge.Services
             {
                 new Claim("UserLoginId", user.Id.ToString()),
                 new Claim("Username", user.Username),
-                new Claim("Password", user.Password)
+                new Claim("Password", user.Password),
+                new Claim(ClaimTypes.Role, userType.Soort)
             }
             ),
                 Expires = DateTime.UtcNow.AddDays(7),

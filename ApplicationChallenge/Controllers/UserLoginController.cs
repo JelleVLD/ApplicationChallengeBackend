@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
 using ApplicationChallenge.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApplicationChallenge.Controllers
 {
