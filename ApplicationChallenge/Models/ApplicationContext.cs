@@ -13,17 +13,19 @@ namespace ApplicationChallenge.Models
 
         }
         public DbSet<Bedrijf> Bedrijven { get; set; }
-        public DbSet<BedrijfTag> BedrijfTags { get; set; }
+        public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<Maker> Makers { get; set; }
+        public DbSet<Tag> Tags { get; set; }
         public DbSet<Opdracht> Opdrachten { get; set; }
         public DbSet<OpdrachtTag> OpdrachtTags { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<SkillMaker> SkillMakers { get; set; }
-        public DbSet<Tag> Tags { get; set; }
+
         public DbSet<UserLogin> UserLogins { get; set; }
-        public DbSet<UserType> UserTypes { get; set; }
-        public DbSet<Admin> Admins { get; set; }
+
+        public DbSet<BedrijfTag> BedrijfTags { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

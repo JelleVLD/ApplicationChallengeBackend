@@ -11,8 +11,8 @@ namespace ApplicationChallenge.Models
 
         [Key]
         public long Id { get; set; }
-        public long OpdrachtId { get; set; }
-        public long TagId { get; set; }
+        public long? OpdrachtId { get; set; }
+        public long? TagId { get; set; }
         public Opdracht Opdracht { get; set; }
         public Tag Tag { get; set; }
     }

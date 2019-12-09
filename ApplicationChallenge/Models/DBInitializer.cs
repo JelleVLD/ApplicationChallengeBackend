@@ -10,6 +10,16 @@ namespace ApplicationChallenge.Models
         public static void Initialize(ApplicationContext context)
         {
             context.Database.EnsureCreated();
+            if (context.Bedrijven.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.Bedrijven.AddRange(
+                                new Bedrijf { Naam = "GrassHopper", Adres = "Veldkant 33b, 2550 Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
+                                );
+            }
             if (context.UserTypes.Any())
             {
                 return;
@@ -17,9 +27,9 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.UserTypes.AddRange(
-                                new UserType {Id=1, Soort="Admin" },
-                                new UserType { Id = 2, Soort = "Maker" },
-                                new UserType { Id = 3, Soort = "Bedrijf" }
+                                new UserType {Soort="Admin" },
+                                new UserType {Soort = "Maker" },
+                                new UserType {Soort = "Bedrijf" }
                                 );
             }
             if (context.Admins.Any())
@@ -45,16 +55,6 @@ namespace ApplicationChallenge.Models
                                    new Skill { Naam = "Java" }
                                 );
             }
-            if (context.Bedrijven.Any())
-            {
-                return;
-            }
-            else
-            {
-                context.Bedrijven.AddRange(
-                                new Bedrijf { Naam="GrassHopper",Adres= "Veldkant 33b, 2550 Kontich",Biografie="Grasshopper Academy",Foto="Grasshopper.jpg" }
-                                );
-            }
             if (context.Makers.Any())
             {
                 return;
@@ -65,28 +65,7 @@ namespace ApplicationChallenge.Models
                                 new Maker { Nickname = "Student123", Voornaam = "Jelle", Achternaam = "Van Langendonck", LinkedInLink = "https://www.linkedin.com/in/jelle-van-langendonck/", Email = "r0705177@student.thomasmore.be", Ervaring = 3, GeboorteDatum = DateTime.Parse("13/11/1998"),GsmNr="+32494692400",Biografie="Ik ben Jelle",Foto="jelle.jpg",CV="cv.pdf"}
                                 );
             }
-            if (context.Bedrijven.Any())
-            {
-                return;
-            }
-            else
-            {
-                context.Bedrijven.AddRange(
-                                new Bedrijf { Naam = "GrassHopper", Adres = "Veldkant 33b, 2550 Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
-                                );
-            }
-            if (context.UserLogins.Any())
-            {
-                return;
-            }
-            else
-            {
-                context.UserLogins.AddRange(
-                                new UserLogin { Username="Admin",Password="Admin1",UserTypeId=1,AdminId=1 },
-                                new UserLogin { Username = "Student", Password = "Student1", UserTypeId =2, MakerId = 1 },
-                                new UserLogin { Username = "Bedrijf", Password = "Bedrijf1", UserTypeId = 3,BedrijfId = 1 }
-                                );
-            }
+            context.SaveChanges();
             if (context.Opdrachten.Any())
             {
                 return;
@@ -108,6 +87,19 @@ namespace ApplicationChallenge.Models
                                 new Tag { Naam = "JavaScript" },
                                 new Tag { Naam = "Hackathon" },
                                 new Tag { Naam = "Angular" }
+                                );
+            }
+            context.SaveChanges();
+            if (context.UserLogins.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.UserLogins.AddRange(
+                                new UserLogin { Username = "Admin", Password = "Admin1", UserTypeId = 1, AdminId = 1 },
+                                new UserLogin { Username = "Student", Password = "Student1", UserTypeId = 2, MakerId = 1 },
+                                new UserLogin { Username = "Bedrijf", Password = "Bedrijf1", UserTypeId = 3, BedrijfId = 1 }
                                 );
             }
             if (context.SkillMakers.Any())
@@ -142,6 +134,7 @@ namespace ApplicationChallenge.Models
                                 new OpdrachtTag { OpdrachtId=1,TagId=1}
                                 );
             }
+            context.SaveChanges();
             if (context.BedrijfTags.Any())
             {
                 return;
@@ -152,6 +145,7 @@ namespace ApplicationChallenge.Models
                                 new BedrijfTag { BedrijfId = 1, TagId = 1 }
                                 );
             }
+            context.SaveChanges();
         }
     }
 }

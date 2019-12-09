@@ -13,10 +13,10 @@ namespace ApplicationChallenge.Models
         public long Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public long MakerId { get; set; }
-        public long BedrijfId { get; set; }
+        public long? MakerId { get; set; }
+        public long? BedrijfId { get; set; }
         public long UserTypeId { get; set; }
-        public long AdminId { get; set; }
+        public long? AdminId { get; set; }
         [NotMapped]
         public string Token { get; set; }
         public Maker Maker { get; set; }
