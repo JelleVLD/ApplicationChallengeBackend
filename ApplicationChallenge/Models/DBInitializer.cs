@@ -9,6 +9,7 @@ namespace ApplicationChallenge.Models
     {
         public static void Initialize(ApplicationContext context)
         {
+
             context.Database.EnsureCreated();
             if (context.Bedrijven.Any())
             {

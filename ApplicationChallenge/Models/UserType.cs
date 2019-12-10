@@ -11,5 +11,6 @@ namespace ApplicationChallenge.Models
         [Key]
         public long Id { get; set; }
         public string Soort { get; set; }
+        public ICollection<Permission> Permissions {get; set;}
     }
 }

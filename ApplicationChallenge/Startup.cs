@@ -20,6 +20,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ApplicationChallenge.Services;
 using ApplicationChallenge.Handlers;
+using Microsoft.AspNetCore.Identity;
 
 namespace ApplicationChallenge
 {
@@ -98,7 +99,6 @@ namespace ApplicationChallenge
             app.UseSwaggerUI(c => {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Application API v1");
             });
-
             DBInitializer.Initialize(context);
         }
     }
