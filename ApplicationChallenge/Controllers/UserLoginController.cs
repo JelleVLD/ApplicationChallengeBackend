@@ -53,33 +53,64 @@ namespace ApplicationChallenge.Controllers
         }
 
         // PUT: api/UserLogin/5
+        //hier passen we de username mee aan, we zullen controleren dat we de username geen 2 keer wegschrijven
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUserLogin(long id, UserLogin userLogin)
         {
-            if (id != userLogin.Id)
+
+            var userBestaat = _context.UserLogins.Where(u => u.Username == userLogin.Username);
+
+
+            long userID = 0;
+
+            foreach (var u in userBestaat)
             {
-                return BadRequest();
+                userID = u.Id;
             }
 
-            _context.Entry(userLogin).State = EntityState.Modified;
-
-            try
+            if (userBestaat.Count() < 1 || userID == id)
             {
+                var userOld = _context.UserLogins.Find(id);
+
+                userLogin.Password = userOld.Password;
+                userLogin.MakerId = userOld.MakerId;
+                userLogin.BedrijfId = userOld.BedrijfId;
+                userLogin.AdminId = userOld.AdminId;
+                userLogin.UserTypeId = userOld.UserTypeId;
+                userLogin.Id = id;
+
+                _context.Entry(userOld).State = EntityState.Detached;
+
+                _context.Entry(userLogin).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
+
+                //try
+                //{
+
+                //    await _context.SaveChangesAsync();
+                //}
+                //catch (DbUpdateConcurrencyException)
+                //{
+                //    if (!UserLoginExists(id))
+                //    {
+                //        return NotFound();
+                //    }
+                //    else
+                //    {
+                //        throw;
+                //    }
+                //}
+
+                return Ok(userLogin);
+
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!UserLoginExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NoContent();
             }
 
-            return NoContent();
+            
         }
 
         // POST: api/UserLogin
