@@ -24,8 +24,9 @@ namespace ApplicationChallenge.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
         {
-            return await _context.Reviews.ToListAsync();
+            return await _context.Reviews.Include(m => m.Maker).Include(b => b.Bedrijf).ToListAsync();
         }
+
 
         // GET: api/Review/5
         [HttpGet("{id}")]

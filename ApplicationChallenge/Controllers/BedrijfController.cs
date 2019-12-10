@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
+using ApplicationChallenge.Attributes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApplicationChallenge.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BedrijfController : ControllerBase
@@ -21,7 +24,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // GET: api/Bedrijf
-        [HttpGet]
+        [HttpGet] [Permission("Bedrijf.onGet")]
         public async Task<ActionResult<IEnumerable<Bedrijf>>> GetBedrijven()
         {
             return await _context.Bedrijven.ToListAsync();

@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace ApplicationChallenge.Models
 {
-    public class UserType
+    public class Permission
     {
-        [Key]
-        public long Id { get; set; }
-        public string Soort { get; set; }
-        public ICollection<Permission> Permissions {get; set;}
+        public int Id { get; set; }
+        public string Title { get; set; }
     }
 }

@@ -20,6 +20,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ApplicationChallenge.Services;
 using ApplicationChallenge.Handlers;
+using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 namespace ApplicationChallenge
 {
@@ -37,7 +39,7 @@ namespace ApplicationChallenge
         {
             services.AddCors(o => o.AddPolicy("MyPolicy", builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
             services.AddDbContext<ApplicationContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; }); ; ;
             services.AddTransient<IImageHandler, ImageHandler>();
             services.AddTransient<IImageWriter,ImageWriter>();
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -98,7 +100,6 @@ namespace ApplicationChallenge
             app.UseSwaggerUI(c => {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Application API v1");
             });
-
             DBInitializer.Initialize(context);
         }
     }

@@ -11,6 +11,7 @@ namespace ApplicationChallenge.Handlers
     public interface IImageHandler
     {
         Task<IActionResult> UploadImage(IFormFile file);
+        string DeleteImage(string fileName);
     }
 
     public class ImageHandler : IImageHandler
@@ -25,6 +26,10 @@ namespace ApplicationChallenge.Handlers
         {
             var result = await _imageWriter.UploadImage(file);
             return new ObjectResult(result);
+        }
+        public string DeleteImage(string fileName)
+        {
+            return _imageWriter.DeleteImage(fileName);
         }
     }
 }

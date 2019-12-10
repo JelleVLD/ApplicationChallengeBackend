@@ -9,5 +9,6 @@ namespace ApplicationChallenge.Services
     public interface IImageWriter
     {
         Task<string> UploadImage(IFormFile file);
+        string DeleteImage(string fileName);
     }
 }
