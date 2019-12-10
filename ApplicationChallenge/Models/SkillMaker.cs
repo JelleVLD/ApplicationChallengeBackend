@@ -13,6 +13,7 @@ namespace ApplicationChallenge.Models
         public long? SkillId { get; set; }
         public long? MakerId { get; set; }
         public int ExpertisePercentage { get; set; }
+        public float Interesse { get; set; }
 
         public Skill Skill { get; set; }
         public Maker Maker { get; set; }

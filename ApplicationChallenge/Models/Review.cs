@@ -10,7 +10,7 @@ namespace ApplicationChallenge.Models
     {
         [Key]
         public long Id { get; set; }
-        public long StudentId { get; set; }
+        public long MakerId { get; set; }
         public long BedrijfId { get; set; }
         public int Score { get; set; }
         public string ReviewTekst { get; set; }

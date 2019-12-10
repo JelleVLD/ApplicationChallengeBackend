@@ -109,8 +109,8 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.SkillMakers.AddRange(
-                                new SkillMaker { MakerId=1,SkillId=1},
-                                new SkillMaker { MakerId=1,SkillId=2}
+                                new SkillMaker { MakerId=1,SkillId=1,ExpertisePercentage=90,Interesse=0},
+                                new SkillMaker { MakerId=1,SkillId=2,ExpertisePercentage=65,Interesse=0}
                                 );
             }
             if (context.Reviews.Any())
@@ -120,8 +120,8 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Reviews.AddRange(
-                                new Review { StudentId = 1, ReviewTekst = "Goede Samenwerking, Vlotte ondersteuning", NaarBedrijf = true, BedrijfId = 1,Score=4 },
-                                new Review { StudentId = 1, ReviewTekst = "Minimalistisch Design, Tijdige Upload", NaarBedrijf = false, BedrijfId = 1, Score =5 }
+                                new Review { MakerId = 1, ReviewTekst = "Goede Samenwerking, Vlotte ondersteuning", NaarBedrijf = true, BedrijfId = 1,Score=4 },
+                                new Review { MakerId = 1, ReviewTekst = "Minimalistisch Design, Tijdige Upload", NaarBedrijf = false, BedrijfId = 1, Score =5 }
                                 ) ;
             }
             if (context.OpdrachtTags.Any())
