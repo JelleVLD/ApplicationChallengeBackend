@@ -24,5 +24,11 @@ namespace ApplicationChallenge.Controllers
         {
             return await _imageHandler.UploadImage(file);
         }
+        [HttpDelete("{fileName}")]
+        public string DeleteImage(string fileName)
+        {
+            _imageHandler.DeleteImage(fileName);
+            return "ok";
+        }
     }
 }

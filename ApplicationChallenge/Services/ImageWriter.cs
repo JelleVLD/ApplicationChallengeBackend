@@ -19,7 +19,13 @@ namespace ApplicationChallenge.Services
 
             return "Invalid image file";
         }
+        public string DeleteImage(string fileName)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", fileName);
+            File.Delete(path);
+            return fileName;
 
+        }
         /// <summary>
         /// Method to check if file is image file
         /// </summary>
