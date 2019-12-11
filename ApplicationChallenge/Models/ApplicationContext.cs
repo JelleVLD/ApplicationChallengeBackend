@@ -18,6 +18,7 @@ namespace ApplicationChallenge.Models
         public DbSet<Maker> Makers { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Opdracht> Opdrachten { get; set; }
+        public DbSet<OpdrachtMaker> OpdrachtMakers { get; set; }
         public DbSet<OpdrachtTag> OpdrachtTags { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Skill> Skills { get; set; }
@@ -33,6 +34,7 @@ namespace ApplicationChallenge.Models
             modelBuilder.Entity<BedrijfTag>().ToTable("BedrijfTag");
             modelBuilder.Entity<Maker>().ToTable("Maker");
             modelBuilder.Entity<Opdracht>().ToTable("Opdracht");
+            modelBuilder.Entity<OpdrachtMaker>().ToTable("OpdrachtMaker");
             modelBuilder.Entity<OpdrachtTag>().ToTable("OpdrachtTag");
             modelBuilder.Entity<Review>().ToTable("Review");
             modelBuilder.Entity<Skill>().ToTable("Skill");

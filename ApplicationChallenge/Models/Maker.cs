@@ -24,5 +24,7 @@ namespace ApplicationChallenge.Models
 
         public ICollection<Review> Reviews { get; set; }
 
+        public ICollection<OpdrachtMaker> OpdrachtMakers { get; set; }
+
     }
 }

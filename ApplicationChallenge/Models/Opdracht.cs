@@ -15,6 +15,7 @@ namespace ApplicationChallenge.Models
         public string Locatie { get; set; }
         public long? BedrijfId { get; set; }
         public ICollection<Maker> Makers { get; set; }
+        public ICollection<OpdrachtMaker> OpdrachtMakers { get; set; }
         public Bedrijf Bedrijf { get; set; }
 
     }
