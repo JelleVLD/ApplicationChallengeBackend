@@ -153,7 +153,10 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Permissions.AddRange(
-                                new Permission {Title="Bedrijf.OnGetID" }
+                                new Permission {Title="Bedrijf.OnGetID" },
+                                new Permission { Title = "Bedrijf.OnDeleteID" },
+                                new Permission { Title = "Opdracht.OnPutID" },
+                                new Permission { Title = "Opdracht.OnDeleteID" }
                                 );
             }
             context.SaveChanges();

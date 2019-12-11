@@ -85,7 +85,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // DELETE: api/Bedrijf/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")] [Permission("Bedrijf.OnDeleteID")]
         public async Task<ActionResult<Bedrijf>> DeleteBedrijf(long id)
         {
             var bedrijf = await _context.Bedrijven.FindAsync(id);
