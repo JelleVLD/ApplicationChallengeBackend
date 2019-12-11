@@ -74,6 +74,7 @@ namespace ApplicationChallenge.Controllers
 
         // POST: api/Opdracht
         [HttpPost]
+        [Permission("Opdracht.OnCreate")]
         public async Task<ActionResult<Opdracht>> PostOpdracht(Opdracht opdracht)
         {
             _context.Opdrachten.Add(opdracht);
