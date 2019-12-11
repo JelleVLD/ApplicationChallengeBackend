@@ -143,7 +143,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.BedrijfTags.AddRange(
-                                new BedrijfTag { BedrijfId = 1, TagId = 1 }
+                                new BedrijfTag { BedrijfId = 1, TagId =4 }
                                 );
             }
             if (context.Permissions.Any())
@@ -156,7 +156,11 @@ namespace ApplicationChallenge.Models
                                 new Permission {Title="Bedrijf.OnGetID" },
                                 new Permission { Title = "Bedrijf.OnDeleteID" },
                                 new Permission { Title = "Opdracht.OnPutID" },
-                                new Permission { Title = "Opdracht.OnDeleteID" }
+                                new Permission { Title = "Opdracht.OnDeleteID" },
+                                 new Permission { Title = "OpdrachtTag.OnGetBedrijfID" },
+                                 new Permission { Title = "Tag.OnCreate" },
+                                 new Permission { Title = "OpdrachtTag.OnDelete" },
+                                 new Permission { Title = "OpdrachtTag.OnCreate" }
                                 );
             }
             context.SaveChanges();
