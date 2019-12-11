@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
+using ApplicationChallenge.Attributes;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -28,17 +29,17 @@ namespace ApplicationChallenge.Controllers
         }
 
         // GET: api/OpdrachtTag/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<OpdrachtTag>> GetOpdrachtTag(long id)
+        [HttpGet("{id}")][Permission("OpdrachtTag.OnGetBedrijfID")]
+        public async Task<ActionResult<IEnumerable<OpdrachtTag>>> GetOpdrachtTags(long id)
         {
-            var opdrachtTag = await _context.OpdrachtTags.FindAsync(id);
+            var opdrachtTags = await _context.OpdrachtTags.Include(t=> t.Tag).Where(o=>o.OpdrachtId == id).ToListAsync();
 
-            if (opdrachtTag == null)
+            if (opdrachtTags == null)
             {
                 return NotFound();
             }
 
-            return opdrachtTag;
+            return opdrachtTags;
         }
 
         // PUT: api/OpdrachtTag/5
@@ -72,7 +73,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // POST: api/OpdrachtTag
-        [HttpPost]
+        [HttpPost] [Permission("OpdrachtTag.OnCreate")]
         public async Task<ActionResult<OpdrachtTag>> PostOpdrachtTag(OpdrachtTag opdrachtTag)
         {
             _context.OpdrachtTags.Add(opdrachtTag);
@@ -82,19 +83,23 @@ namespace ApplicationChallenge.Controllers
         }
 
         // DELETE: api/OpdrachtTag/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<OpdrachtTag>> DeleteOpdrachtTag(long id)
+        [HttpDelete("{id}")] [Permission("OpdrachtTag.OnDelete")]
+        public async Task<ActionResult<IEnumerable<OpdrachtTag>>> DeleteOpdrachtTag(long id)
         {
-            var opdrachtTag = await _context.OpdrachtTags.FindAsync(id);
-            if (opdrachtTag == null)
+            var opdrachtTags = await _context.OpdrachtTags.Where(o=>o.OpdrachtId == id).Include(t=>t.Tag).ToListAsync();
+            if (opdrachtTags == null)
             {
                 return NotFound();
             }
+            foreach (var opdrachtTag in opdrachtTags)
+            {
+                _context.OpdrachtTags.Remove(opdrachtTag);
+                _context.Tags.Remove(opdrachtTag.Tag);
 
-            _context.OpdrachtTags.Remove(opdrachtTag);
+            }
             await _context.SaveChangesAsync();
 
-            return opdrachtTag;
+            return opdrachtTags;
         }
 
         private bool OpdrachtTagExists(long id)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace ApplicationChallenge.Models
@@ -10,6 +11,23 @@ namespace ApplicationChallenge.Models
         public static void Initialize(ApplicationContext context)
         {
 
+            string HashPassword(string password)
+            {
+                byte[] salt;
+                new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+                var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 2000);
+                byte[] hash = pbkdf2.GetBytes(20);
+
+                byte[] hashBytes = new byte[36];
+                Array.Copy(salt, 0, hashBytes, 0, 16);
+                Array.Copy(hash, 0, hashBytes, 16, 20);
+
+                string PasswordHash = Convert.ToBase64String(hashBytes);
+
+                return PasswordHash;
+            }
+
             context.Database.EnsureCreated();
             if (context.Bedrijven.Any())
             {
@@ -18,7 +36,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Bedrijven.AddRange(
-                                new Bedrijf { Naam = "GrassHopper", Adres = "Veldkant 33b, 2550 Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
+         new Bedrijf { Naam = "GrassHopper", Postcode="2550",Straat="Veldkant",StraatNr="33b",WoonPlaats="Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
                                 );
             }
             if (context.UserTypes.Any())
@@ -63,7 +81,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Makers.AddRange(
-                                new Maker { Nickname = "Student123", Voornaam = "Jelle", Achternaam = "Van Langendonck", LinkedInLink = "https://www.linkedin.com/in/jelle-van-langendonck/", Email = "r0705177@student.thomasmore.be", Ervaring = 3, GeboorteDatum = DateTime.Parse("13/11/1998"),GsmNr="+32494692400",Biografie="Ik ben Jelle",Foto="jelle.jpg",CV="cv.pdf"}
+                                new Maker { Nickname = "Student123", Voornaam = "Jelle", Achternaam = "Van Langendonck", LinkedInLink = "https://www.linkedin.com/in/jelle-van-langendonck/", Ervaring = 3, GeboorteDatum = DateTime.Parse("13/11/1998"), Nr = "51", Straat = "Bochtstraat", Postcode = 2550, Stad = "Kontich", Biografie="Ik ben Jelle",Foto="jelle.jpg",CV="cv.pdf"}
                                 );
             }
             context.SaveChanges();
@@ -74,7 +92,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Opdrachten.AddRange(
-                                new Opdracht {BedrijfId=1,Titel="Application Challenge",Omschrijving="Dit is een Challenge voor de studenten van Thomas More.",Locatie= "Kleinhoefstraat 4, 2440 Geel" }
+                                new Opdracht {BedrijfId=1,Titel="Application Challenge",Omschrijving="Dit is een Challenge voor de studenten van Thomas More.",Postcode="2440",WoonPlaats="Geel",Straat="KleinhoefStraat",StraatNr="4" }
                                 );
             }
             if (context.Tags.Any())
@@ -98,9 +116,9 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.UserLogins.AddRange(
-                                new UserLogin { Username = "Admin", Password = "Admin1", UserTypeId = 1, AdminId = 1 },
-                                new UserLogin { Username = "Student", Password = "Student1", UserTypeId = 2, MakerId = 1 },
-                                new UserLogin { Username = "Bedrijf", Password = "Bedrijf1", UserTypeId = 3, BedrijfId = 1 }
+                                new UserLogin { Username = "Admin", Password = HashPassword("Admin1"), UserTypeId = 1, AdminId = 1, Email = "r0705177@student.thomasmore.be" },
+                                new UserLogin { Username = "Student", Password = HashPassword("Student1"), UserTypeId = 2, MakerId = 1, Email = "r0697191@student.thomasmore.be", },
+                                new UserLogin { Username = "Bedrijf", Password = HashPassword("Bedrijf1"), UserTypeId = 3, BedrijfId = 1, Email = "r0123456@student.thomasmore.be", }
                                 );
             }
             if (context.SkillMakers.Any())
@@ -143,10 +161,28 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.BedrijfTags.AddRange(
-                                new BedrijfTag { BedrijfId = 1, TagId = 1 }
+                                new BedrijfTag { BedrijfId = 1, TagId =4 }
+                                );
+            }
+            if (context.Permissions.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.Permissions.AddRange(
+                                new Permission {Title="Bedrijf.OnGetID" },
+                                new Permission { Title = "Bedrijf.OnDeleteID" },
+                                new Permission { Title = "Opdracht.OnPutID" },
+                                new Permission { Title = "Opdracht.OnDeleteID" },
+                                 new Permission { Title = "OpdrachtTag.OnGetBedrijfID" },
+                                 new Permission { Title = "Tag.OnCreate" },
+                                 new Permission { Title = "OpdrachtTag.OnDelete" },
+                                 new Permission { Title = "OpdrachtTag.OnCreate" }
                                 );
             }
             context.SaveChanges();
         }
+
     }
 }

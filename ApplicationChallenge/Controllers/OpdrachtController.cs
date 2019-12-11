@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
+using ApplicationChallenge.Attributes;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -56,7 +57,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // PUT: api/Opdracht/5
-        [HttpPut("{id}")]
+        [HttpPut("{id}")] [Permission("Opdracht.OnPutID")]
         public async Task<IActionResult> PutOpdracht(long id, Opdracht opdracht)
         {
             if (id != opdracht.Id)
@@ -87,6 +88,7 @@ namespace ApplicationChallenge.Controllers
 
         // POST: api/Opdracht
         [HttpPost]
+        [Permission("Opdracht.OnCreate")]
         public async Task<ActionResult<Opdracht>> PostOpdracht(Opdracht opdracht)
         {
             _context.Opdrachten.Add(opdracht);
@@ -96,7 +98,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // DELETE: api/Opdracht/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")] [Permission("Opdracht.OnDeleteID")]
         public async Task<ActionResult<Opdracht>> DeleteOpdracht(long id)
         {
             var opdracht = await _context.Opdrachten.FindAsync(id);
@@ -104,8 +106,12 @@ namespace ApplicationChallenge.Controllers
             {
                 return NotFound();
             }
-
-            _context.Opdrachten.Remove(opdracht);
+            var opdrachtTags = await _context.OpdrachtTags.Where(o => o.OpdrachtId == id).ToListAsync();
+            foreach (var opdrachtTag in opdrachtTags)
+            {
+                _context.OpdrachtTags.Remove(opdrachtTag);
+            }
+            _context.Opdrachten .Remove(opdracht);
             await _context.SaveChangesAsync();
 
             return opdracht;

@@ -31,10 +31,10 @@ namespace ApplicationChallenge.Controllers
         }
 
         // GET: api/Bedrijf/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] [Permission("Bedrijf.OnGetID")]
         public async Task<ActionResult<Bedrijf>> GetBedrijf(long id)
         {
-            var bedrijf = await _context.Bedrijven.FindAsync(id);
+            var bedrijf = await _context.Bedrijven.Include(o=> o.Opdrachten).Where(i => i.Id == id).FirstOrDefaultAsync();
 
             if (bedrijf == null)
             {
@@ -85,7 +85,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // DELETE: api/Bedrijf/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")] [Permission("Bedrijf.OnDeleteID")]
         public async Task<ActionResult<Bedrijf>> DeleteBedrijf(long id)
         {
             var bedrijf = await _context.Bedrijven.FindAsync(id);

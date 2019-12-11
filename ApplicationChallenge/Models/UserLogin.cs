@@ -13,6 +13,7 @@ namespace ApplicationChallenge.Models
         public long Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Email { get; set; }
         public long? MakerId { get; set; }
         public long? BedrijfId { get; set; }
         public long UserTypeId { get; set; }

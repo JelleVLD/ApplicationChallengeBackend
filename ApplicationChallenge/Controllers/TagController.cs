@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
+using ApplicationChallenge.Attributes;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -72,7 +73,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // POST: api/Tag
-        [HttpPost]
+        [HttpPost] [Permission("Tag.OnCreate")]
         public async Task<ActionResult<Tag>> PostTag(Tag tag)
         {
             _context.Tags.Add(tag);
