@@ -11,7 +11,10 @@ namespace ApplicationChallenge.Models
         [Key]
         public long Id { get; set; }
         public string Naam { get; set; }
-        public string Adres { get; set; }
+        public string Straat { get; set; }
+        public string Nr { get; set; }
+        public string Stad { get; set; }
+        public int Postcode { get; set; }
         public string Biografie { get; set; }
         public string Foto { get; set; }
         public ICollection<Review> Reviews { get; set; }

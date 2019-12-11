@@ -28,7 +28,16 @@ namespace ApplicationChallenge.Services
                 .SingleOrDefault(x => x.Username == username && x.Password == password);
 
             if (user == null)
+            {
+                user = _apiContext
+                .UserLogins
+                .SingleOrDefault(x => x.Email == username && x.Password == password);
+            }
+
+            if (user == null)
+            {
                 return null;
+            }
 
             var userType = _apiContext.UserTypes.SingleOrDefault(x => x.Id == user.UserTypeId);
             var tokenHandler = new JwtSecurityTokenHandler();

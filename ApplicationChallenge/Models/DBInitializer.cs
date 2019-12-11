@@ -18,7 +18,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Bedrijven.AddRange(
-                                new Bedrijf { Naam = "GrassHopper", Adres = "Veldkant 33b, 2550 Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
+                                new Bedrijf { Naam = "GrassHopper", Nr="33b", Straat="Veldkant", Postcode=2550, Stad="Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
                                 );
             }
             if (context.UserTypes.Any())
@@ -63,7 +63,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Makers.AddRange(
-                                new Maker { Nickname = "Student123", Voornaam = "Jelle", Achternaam = "Van Langendonck", LinkedInLink = "https://www.linkedin.com/in/jelle-van-langendonck/", Email = "r0705177@student.thomasmore.be", Ervaring = 3, GeboorteDatum = DateTime.Parse("13/11/1998"),GsmNr="+32494692400",Biografie="Ik ben Jelle",Foto="jelle.jpg",CV="cv.pdf"}
+                                new Maker { Nickname = "Student123", Voornaam = "Jelle", Achternaam = "Van Langendonck", LinkedInLink = "https://www.linkedin.com/in/jelle-van-langendonck/", Ervaring = 3, GeboorteDatum = DateTime.Parse("13/11/1998"), Nr = "51", Straat = "Bochtstraat", Postcode = 2550, Stad = "Kontich", Biografie="Ik ben Jelle",Foto="jelle.jpg",CV="cv.pdf"}
                                 );
             }
             context.SaveChanges();
@@ -98,9 +98,9 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.UserLogins.AddRange(
-                                new UserLogin { Username = "Admin", Password = "Admin1", UserTypeId = 1, AdminId = 1 },
-                                new UserLogin { Username = "Student", Password = "Student1", UserTypeId = 2, MakerId = 1 },
-                                new UserLogin { Username = "Bedrijf", Password = "Bedrijf1", UserTypeId = 3, BedrijfId = 1 }
+                                new UserLogin { Username = "Admin", Password = "Admin1", UserTypeId = 1, AdminId = 1, Email = "r0705177@student.thomasmore.be" },
+                                new UserLogin { Username = "Student", Password = "Student1", UserTypeId = 2, MakerId = 1, Email = "r0697191@student.thomasmore.be", },
+                                new UserLogin { Username = "Bedrijf", Password = "Bedrijf1", UserTypeId = 3, BedrijfId = 1, Email = "r0123456@student.thomasmore.be", }
                                 );
             }
             if (context.SkillMakers.Any())
