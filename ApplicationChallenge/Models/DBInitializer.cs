@@ -36,11 +36,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Bedrijven.AddRange(
-<<<<<<< HEAD
-                                new Bedrijf { Naam = "GrassHopper", Nr="33b", Straat="Veldkant", Postcode=2550, Stad="Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
-=======
-                                new Bedrijf { Naam = "GrassHopper", Postcode="2550",Straat="Veldkant",StraatNr="33b",WoonPlaats="Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
->>>>>>> aanpassingen bedrijf en opdrachtmodel + insert opdracht werkt
+         new Bedrijf { Naam = "GrassHopper", Postcode="2550",Straat="Veldkant",StraatNr="33b",WoonPlaats="Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
                                 );
             }
             if (context.UserTypes.Any())
