@@ -9,6 +9,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Cryptography;
 
 namespace ApplicationChallenge.Services
 {
@@ -21,20 +23,47 @@ namespace ApplicationChallenge.Services
             _appSettings = appSettings.Value;
             _apiContext = apiContext;
         }
+
+        private bool VerifyPassword(string password, string savedPasswordHash)
+        {
+            /* Extract the bytes */
+            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
+            /* Get the salt */
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+            /* Compute the hash on the password the user entered */
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 2000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            /* Compare the results */
+            for (int i = 0; i < 20; i++)
+            {
+                if (hashBytes[i + 16] != hash[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
         public UserLogin Authenticate(string username, string password)
         {
             var user = _apiContext
                 .UserLogins
-                .SingleOrDefault(x => x.Username == username && x.Password == password);
+                .SingleOrDefault(x => x.Username == username);
 
             if (user == null)
             {
                 user = _apiContext
                 .UserLogins
-                .SingleOrDefault(x => x.Email == username && x.Password == password);
+                .SingleOrDefault(x => x.Email == username);
             }
 
             if (user == null)
+            {
+                return null;
+            }
+
+            if (!VerifyPassword(password, user.Password))
             {
                 return null;
             }

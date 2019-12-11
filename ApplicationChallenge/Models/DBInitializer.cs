@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace ApplicationChallenge.Models
@@ -9,6 +10,23 @@ namespace ApplicationChallenge.Models
     {
         public static void Initialize(ApplicationContext context)
         {
+
+            string HashPassword(string password)
+            {
+                byte[] salt;
+                new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+                var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 2000);
+                byte[] hash = pbkdf2.GetBytes(20);
+
+                byte[] hashBytes = new byte[36];
+                Array.Copy(salt, 0, hashBytes, 0, 16);
+                Array.Copy(hash, 0, hashBytes, 16, 20);
+
+                string PasswordHash = Convert.ToBase64String(hashBytes);
+
+                return PasswordHash;
+            }
 
             context.Database.EnsureCreated();
             if (context.Bedrijven.Any())
@@ -98,9 +116,9 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.UserLogins.AddRange(
-                                new UserLogin { Username = "Admin", Password = "Admin1", UserTypeId = 1, AdminId = 1, Email = "r0705177@student.thomasmore.be" },
-                                new UserLogin { Username = "Student", Password = "Student1", UserTypeId = 2, MakerId = 1, Email = "r0697191@student.thomasmore.be", },
-                                new UserLogin { Username = "Bedrijf", Password = "Bedrijf1", UserTypeId = 3, BedrijfId = 1, Email = "r0123456@student.thomasmore.be", }
+                                new UserLogin { Username = "Admin", Password = HashPassword("Admin1"), UserTypeId = 1, AdminId = 1, Email = "r0705177@student.thomasmore.be" },
+                                new UserLogin { Username = "Student", Password = HashPassword("Student1"), UserTypeId = 2, MakerId = 1, Email = "r0697191@student.thomasmore.be", },
+                                new UserLogin { Username = "Bedrijf", Password = HashPassword("Bedrijf1"), UserTypeId = 3, BedrijfId = 1, Email = "r0123456@student.thomasmore.be", }
                                 );
             }
             if (context.SkillMakers.Any())
@@ -165,5 +183,6 @@ namespace ApplicationChallenge.Models
             }
             context.SaveChanges();
         }
+
     }
 }
