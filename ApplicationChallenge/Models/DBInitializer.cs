@@ -146,6 +146,16 @@ namespace ApplicationChallenge.Models
                                 new BedrijfTag { BedrijfId = 1, TagId = 1 }
                                 );
             }
+            if (context.Permissions.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.Permissions.AddRange(
+                                new Permission {Title="Bedrijf.OnGetID" }
+                                );
+            }
             context.SaveChanges();
         }
     }

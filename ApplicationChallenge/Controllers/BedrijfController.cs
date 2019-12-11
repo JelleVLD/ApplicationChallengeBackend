@@ -31,10 +31,10 @@ namespace ApplicationChallenge.Controllers
         }
 
         // GET: api/Bedrijf/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] [Permission("Bedrijf.OnGetID")]
         public async Task<ActionResult<Bedrijf>> GetBedrijf(long id)
         {
-            var bedrijf = await _context.Bedrijven.FindAsync(id);
+            var bedrijf = await _context.Bedrijven.Include(o=> o.Opdrachten).Where(i => i.Id == id).FirstOrDefaultAsync();
 
             if (bedrijf == null)
             {
