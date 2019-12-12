@@ -171,14 +171,14 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Permissions.AddRange(
-                                new Permission {Title="Bedrijf.OnGetID" },
-                                new Permission { Title = "Bedrijf.OnDeleteID" },
-                                new Permission { Title = "Opdracht.OnPutID" },
-                                new Permission { Title = "Opdracht.OnDeleteID" },
-                                 new Permission { Title = "OpdrachtTag.OnGetBedrijfID" },
-                                 new Permission { Title = "Tag.OnCreate" },
-                                 new Permission { Title = "OpdrachtTag.OnDelete" },
-                                 new Permission { Title = "OpdrachtTag.OnCreate" }
+                                new Permission { Title = "Bedrijf.OnGetID", UserTypeId = 3 },
+                                new Permission { Title = "Bedrijf.OnDeleteID", UserTypeId = 3 },
+                                new Permission { Title = "Opdracht.OnPutID", UserTypeId = 3 },
+                                new Permission { Title = "Opdracht.OnDeleteID", UserTypeId = 3 },
+                                new Permission { Title = "OpdrachtTag.OnGetBedrijfID", UserTypeId = 3 },
+                                new Permission { Title = "Tag.OnCreate", UserTypeId = 3 },
+                                new Permission { Title = "OpdrachtTag.OnDelete", UserTypeId = 3 },
+                                new Permission { Title = "OpdrachtTag.OnCreate", UserTypeId = 3 }
                                 );
             }
             context.SaveChanges();

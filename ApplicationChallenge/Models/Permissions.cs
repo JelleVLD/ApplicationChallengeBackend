@@ -10,5 +10,7 @@ namespace ApplicationChallenge.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
+
+        public int UserTypeId { get; set; }
     }
 }
