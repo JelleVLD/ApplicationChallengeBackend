@@ -73,7 +73,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // POST: api/Tag
-        [HttpPost] [Permission("Tag.OnCreate")]
+        [HttpPost] 
         public async Task<ActionResult<Tag>> PostTag(Tag tag)
         {
             _context.Tags.Add(tag);

@@ -24,14 +24,14 @@ namespace ApplicationChallenge.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OpdrachtMaker>>> GetOpdrachtMakers()
         {
-            return await _context.OpdrachtMakers.ToListAsync();
+            return await _context.OpdrachtMakers.Include(o => o.Opdracht).Include(o => o.Opdracht.Bedrijf).ToListAsync();
         }
 
         // GET: api/OpdrachtMaker/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OpdrachtMaker>> GetOpdrachtMaker(long id)
+        public async Task<ActionResult<IEnumerable<OpdrachtMaker>>> GetOpdrachtMaker(long id)
         {
-            var opdrachtMaker = await _context.OpdrachtMakers.FindAsync(id);
+            var opdrachtMaker = await _context.OpdrachtMakers.Include(o => o.Opdracht).Include(o => o.Opdracht.Bedrijf).Where(o => o.MakerId == id).ToListAsync();
 
             if (opdrachtMaker == null)
             {
@@ -66,6 +66,36 @@ namespace ApplicationChallenge.Controllers
                 {
                     throw;
                 }
+            }
+
+            return NoContent();
+        }
+
+        //nakijken of er al is gestemd voor een opdracht
+        // PUT: api/OpdrachtMaker/5
+        [HttpPut("get{id}")]
+        public async Task<ActionResult<IList<OpdrachtMaker>>> PutgetOpdrachtMaker(long id, OpdrachtMaker opdrachtMaker)
+        {
+            var vopdrachtmaker = await _context.OpdrachtMakers.Where(o => o.OpdrachtId == opdrachtMaker.OpdrachtId).Where(o => o.MakerId == opdrachtMaker.MakerId).ToListAsync();
+
+
+            int count = 0;
+
+            var opdrachtmaker = new List<OpdrachtMaker>();
+
+            foreach (var o in vopdrachtmaker)
+            {
+                opdrachtmaker.Add(new OpdrachtMaker { Id = o.Id });
+                count++;
+            }
+
+            if (count > 0)
+            {
+                return opdrachtmaker;
+            }
+            else
+            {
+                return NoContent();
             }
 
             return NoContent();
