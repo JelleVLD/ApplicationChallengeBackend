@@ -42,6 +42,33 @@ namespace ApplicationChallenge.Controllers
             return review;
         }
 
+        // GET: api/Review/5
+        [HttpGet("getReviewsBedrijf/{id}")]
+        public async Task<ActionResult<int>> GetReviewBedrijf(long id)
+        {
+            var review = await _context.Reviews.Include(r => r.Maker).Include(r => r.Bedrijf).Where(r => r.BedrijfId == id).Where(r => r.NaarBedrijf == true).ToListAsync();
+
+            int count = 0;
+            int totaal = 0;
+
+            foreach(var r in review)
+            {
+                totaal += r.Score;
+                count++;
+            }
+
+            //var gemiddelde = new List<int>();
+
+            //gemiddelde.Add(totaal / count);
+
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            return totaal / count;
+        }
+
         // PUT: api/Review/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReview(long id, Review review)
