@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
 using ApplicationChallenge.Services;
 using Microsoft.AspNetCore.Authorization;
+using System.Net;
+using System.Security.Cryptography;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -123,6 +125,34 @@ namespace ApplicationChallenge.Controllers
             return CreatedAtAction("GetUserLogin", new { id = userLogin.Id }, userLogin);
         }
 
+        // POST: api/UserLogin
+        [HttpPost("AddLoginMaker")]
+        public async Task<ActionResult<UserLogin>> AddLoginMaker(UserLogin userLogin)
+        {
+            userLogin.UserTypeId = 1;
+
+            if (_context.UserLogins.Where(x => x.Email == userLogin.Email).SingleOrDefault() != null)
+            {
+                return Ok("Email");
+            }
+
+            if (_context.UserLogins.Where(x => x.Username == userLogin.Username).SingleOrDefault() != null)
+            {
+                return Ok("Username");
+            }
+
+            //_context.Makers.Add(maker);
+            await _context.SaveChangesAsync();
+
+            //userLogin.MakerId = maker.Id;
+            userLogin.Password = HashPassword(userLogin.Password);
+
+            _context.UserLogins.Add(userLogin);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetUserLogin", new { id = userLogin.Id }, userLogin);
+        }
+
         // DELETE: api/UserLogin/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<UserLogin>> DeleteUserLogin(long id)
@@ -142,6 +172,23 @@ namespace ApplicationChallenge.Controllers
         private bool UserLoginExists(long id)
         {
             return _context.UserLogins.Any(e => e.Id == id);
+        }
+
+        string HashPassword(string password)
+        {
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 2000);
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            string PasswordHash = Convert.ToBase64String(hashBytes);
+
+            return PasswordHash;
         }
     }
 }
