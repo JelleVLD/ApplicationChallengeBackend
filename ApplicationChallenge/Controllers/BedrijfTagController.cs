@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
+using ApplicationChallenge.Attributes;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -28,17 +29,17 @@ namespace ApplicationChallenge.Controllers
         }
 
         // GET: api/BedrijfTag/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<BedrijfTag>> GetBedrijfTag(long id)
+        [HttpGet("{id}")] [Permission("BedrijfTag.OnGetBedrijfID")]
+        public async Task<ActionResult<IEnumerable<BedrijfTag>>> GetBedrijfTags(long id)
         {
-            var bedrijfTag = await _context.BedrijfTags.FindAsync(id);
+            var bedrijfTags = await _context.BedrijfTags.Include(t => t.Tag).Where(b => b.BedrijfId == id).ToListAsync();
 
-            if (bedrijfTag == null)
+            if (bedrijfTags == null)
             {
                 return NotFound();
             }
 
-            return bedrijfTag;
+            return bedrijfTags;
         }
 
         // PUT: api/BedrijfTag/5
@@ -72,7 +73,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // POST: api/BedrijfTag
-        [HttpPost]
+        [HttpPost] [Permission("BedrijfTag.OnCreate")]
         public async Task<ActionResult<BedrijfTag>> PostBedrijfTag(BedrijfTag bedrijfTag)
         {
             _context.BedrijfTags.Add(bedrijfTag);
@@ -82,19 +83,23 @@ namespace ApplicationChallenge.Controllers
         }
 
         // DELETE: api/BedrijfTag/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<BedrijfTag>> DeleteBedrijfTag(long id)
+        [HttpDelete("{id}")] [Permission("BedrijfTag.OnDelete")]
+        public async Task<ActionResult<IEnumerable<BedrijfTag>>> DeleteBedrijfTag(long id)
         {
-            var bedrijfTag = await _context.BedrijfTags.FindAsync(id);
-            if (bedrijfTag == null)
+            var bedrijfTags = await _context.BedrijfTags.Where(o => o.BedrijfId == id).Include(t => t.Tag).ToListAsync();
+            if (bedrijfTags == null)
             {
                 return NotFound();
             }
+            foreach (var bedrijfTag in bedrijfTags)
+            {
+                _context.BedrijfTags.Remove(bedrijfTag);
+                _context.Tags.Remove(bedrijfTag.Tag);
 
-            _context.BedrijfTags.Remove(bedrijfTag);
+            }
             await _context.SaveChangesAsync();
 
-            return bedrijfTag;
+            return bedrijfTags;
         }
 
         private bool BedrijfTagExists(long id)
