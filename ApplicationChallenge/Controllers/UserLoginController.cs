@@ -10,6 +10,7 @@ using ApplicationChallenge.Services;
 using Microsoft.AspNetCore.Authorization;
 using System.Net;
 using System.Security.Cryptography;
+using ApplicationChallenge.Models.Dto;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -127,9 +128,12 @@ namespace ApplicationChallenge.Controllers
 
         // POST: api/UserLogin
         [HttpPost("AddLoginMaker")]
-        public async Task<ActionResult<UserLogin>> AddLoginMaker(UserLogin userLogin)
+        public async Task<ActionResult<UserLogin>> AddLoginMaker(MakerWithLogin data)
         {
-            userLogin.UserTypeId = 1;
+            UserLogin userLogin = data.userlogin;
+            Maker maker = data.maker;
+
+            userLogin.UserTypeId = 2;
 
             if (_context.UserLogins.Where(x => x.Email == userLogin.Email).SingleOrDefault() != null)
             {
@@ -141,10 +145,10 @@ namespace ApplicationChallenge.Controllers
                 return Ok("Username");
             }
 
-            //_context.Makers.Add(maker);
+            _context.Makers.Add(maker);
             await _context.SaveChangesAsync();
 
-            //userLogin.MakerId = maker.Id;
+            userLogin.MakerId = maker.Id;
             userLogin.Password = HashPassword(userLogin.Password);
 
             _context.UserLogins.Add(userLogin);
