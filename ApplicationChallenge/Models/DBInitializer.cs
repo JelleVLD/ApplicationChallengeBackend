@@ -36,7 +36,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Bedrijven.AddRange(
-         new Bedrijf { Naam = "GrassHopper", Postcode="2550",Straat="Veldkant",StraatNr="33b",WoonPlaats="Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
+         new Bedrijf { Naam = "GrassHopper", Postcode="2550",Straat="Veldkant", Nr="33b", Stad="Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
                                 );
             }
             if (context.UserTypes.Any())

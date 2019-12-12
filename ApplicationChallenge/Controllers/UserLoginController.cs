@@ -157,6 +157,42 @@ namespace ApplicationChallenge.Controllers
             return CreatedAtAction("GetUserLogin", new { id = userLogin.Id }, userLogin);
         }
 
+        // POST: api/UserLogin
+        [HttpPost("AddLoginBedrijf")]
+        public async Task<ActionResult<UserLogin>> AddLoginBedrijf(BedrijfWithLogin data)
+        {
+            UserLogin userLogin = data.userlogin;
+            Bedrijf bedrijf = data.bedrijf;
+
+            userLogin.UserTypeId = 3;
+
+            if (_context.UserLogins.Where(x => x.Email == userLogin.Email).SingleOrDefault() != null)
+            {
+                return Ok("Email");
+            }
+
+            if (_context.UserLogins.Where(x => x.Username == userLogin.Username).SingleOrDefault() != null)
+            {
+                return Ok("Username");
+            }
+
+            if (_context.Bedrijven.Where(x => x.Naam == bedrijf.Naam).SingleOrDefault() != null)
+            {
+                return Ok("Name");
+            }
+
+            _context.Bedrijven.Add(bedrijf);
+            await _context.SaveChangesAsync();
+
+            userLogin.BedrijfId = bedrijf.Id;
+            userLogin.Password = HashPassword(userLogin.Password);
+
+            _context.UserLogins.Add(userLogin);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetUserLogin", new { id = userLogin.Id }, userLogin);
+        }
+
         // DELETE: api/UserLogin/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<UserLogin>> DeleteUserLogin(long id)
