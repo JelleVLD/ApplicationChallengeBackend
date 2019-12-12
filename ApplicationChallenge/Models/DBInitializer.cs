@@ -36,7 +36,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Bedrijven.AddRange(
-                                new Bedrijf { Naam = "GrassHopper", Nr="33b", Straat="Veldkant", Postcode=2550, Stad="Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
+         new Bedrijf { Naam = "GrassHopper", Postcode="2550",Straat="Veldkant",StraatNr="33b",WoonPlaats="Kontich", Biografie = "Grasshopper Academy", Foto = "Grasshopper.jpg" }
                                 );
             }
             if (context.UserTypes.Any())
@@ -92,7 +92,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Opdrachten.AddRange(
-                                new Opdracht {BedrijfId=1,Titel="Application Challenge",Omschrijving="Dit is een Challenge voor de studenten van Thomas More.",Locatie= "Kleinhoefstraat 4, 2440 Geel" }
+                                new Opdracht {BedrijfId=1,Titel="Application Challenge",Omschrijving="Dit is een Challenge voor de studenten van Thomas More.",Postcode="2440",WoonPlaats="Geel",Straat="KleinhoefStraat",StraatNr="4" }
                                 );
             }
             if (context.Tags.Any())

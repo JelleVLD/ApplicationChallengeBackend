@@ -24,15 +24,29 @@ namespace ApplicationChallenge.Controllers
         // GET: api/Opdracht
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Opdracht>>> GetOpdrachten()
+
         {
-            return await _context.Opdrachten.ToListAsync();
+            var opdrachten = _context.Opdrachten.Include(o => o.Bedrijf).ToListAsync();
+
+            return await opdrachten;
         }
+
+        //// GET: api/Opdracht
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<IEnumerable<Opdracht>>> GetOpdrachtenByTitle(string title)
+
+        //{
+        //    var opdrachten = _context.Opdrachten.Include(o => o.Bedrijf).Where(o => o.Titel.ToLower() == title.ToLower()).ToListAsync();
+
+        //    return await opdrachten;
+        //}
 
         // GET: api/Opdracht/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Opdracht>> GetOpdracht(long id)
         {
-            var opdracht = await _context.Opdrachten.FindAsync(id);
+            var opdracht = await _context.Opdrachten.Include(o => o.Bedrijf).FirstOrDefaultAsync(o => o.Id == id);
+            //var opdracht = await _context.Opdrachten.FindAsync(id);
 
             if (opdracht == null)
             {
@@ -74,6 +88,7 @@ namespace ApplicationChallenge.Controllers
 
         // POST: api/Opdracht
         [HttpPost]
+        [Permission("Opdracht.OnCreate")]
         public async Task<ActionResult<Opdracht>> PostOpdracht(Opdracht opdracht)
         {
             _context.Opdrachten.Add(opdracht);
