@@ -24,11 +24,8 @@ namespace ApplicationChallenge.Controllers
         }
 
         // GET: api/Bedrijf
-<<<<<<< HEAD
         [HttpGet] [Permission("Bedrijf.OnGet")]
-=======
-        [HttpGet]
->>>>>>> permissions terug toegevoegd
+
         public async Task<ActionResult<IEnumerable<Bedrijf>>> GetBedrijven()
         {
             return await _context.Bedrijven.ToListAsync();
