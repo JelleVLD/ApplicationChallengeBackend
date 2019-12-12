@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Net;
 using System.Security.Cryptography;
 using ApplicationChallenge.Models.Dto;
+using System.Security.Claims;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -41,8 +42,31 @@ namespace ApplicationChallenge.Controllers
             return await _context.UserLogins.ToListAsync();
         }
 
+
         // GET: api/UserLogin/5
-        [HttpGet("{id}")]
+        [Authorize]
+        [HttpGet("loginInfo")]
+        public async Task<ActionResult<LoginInfo>> GetLoginInfo()
+        {
+            var id = User.Claims.FirstOrDefault(c => c.Type == "UserLoginId").Value;
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var userLogin = await _context.UserLogins.Where(x => x.Id == Convert.ToInt64(id)).SingleOrDefaultAsync();
+
+            if (userLogin == null)
+            {
+                return NotFound();
+            }
+
+            LoginInfo loginInfo = new LoginInfo(userLogin.Username, userLogin.Email);
+
+            return loginInfo;
+        }
+
         public async Task<ActionResult<UserLogin>> GetUserLogin(long id)
         {
             var userLogin = await _context.UserLogins.FindAsync(id);
@@ -113,7 +137,98 @@ namespace ApplicationChallenge.Controllers
                 return NoContent();
             }
 
-            
+
+        }
+
+        [HttpPut("changePassword/{id}")]
+        public async Task<IActionResult> ChangePassword(long id, UserLogin userLogin)
+        {
+            var userLoginId = User.Claims.FirstOrDefault(c => c.Type == "UserLoginId").Value;
+
+            if (userLoginId == null)
+            {
+                return NotFound();
+            }
+
+            var userLoginOld = _context.UserLogins.Find(Convert.ToInt64(userLoginId));
+
+            userLogin.Id = userLoginOld.Id;
+            userLogin.Username = userLoginOld.Username;
+            userLogin.Email = userLoginOld.Email;
+            userLogin.MakerId = userLoginOld.MakerId;
+            userLogin.BedrijfId = userLoginOld.BedrijfId;
+            userLogin.UserTypeId = userLoginOld.UserTypeId;
+            userLogin.AdminId = userLoginOld.AdminId;
+
+            userLogin.Password = HashPassword(userLogin.Password);
+
+            _context.Entry(userLoginOld).State = EntityState.Detached;
+
+            _context.Entry(userLogin).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+
+            //if (_context.UserLogins.Where(x => x.Username == userLogin.Username).SingleOrDefaultAsync() != null)
+            //{
+            //    return Ok("Username");
+            //}
+
+            //if (_context.UserLogins.Where(x => x.Email == userLogin.Email).SingleOrDefaultAsync() != null)
+            //{
+            //    return Ok("Username");
+            //}
+
+
+
+        }
+
+        [HttpPut("changeUserInfo/{id}")]
+        public async Task<IActionResult> ChangeUserInfo(long id, UserLogin userLogin)
+        {
+            var userLoginId = User.Claims.FirstOrDefault(c => c.Type == "UserLoginId").Value;
+
+            if (userLoginId == null)
+            {
+                return NotFound();
+            }
+
+            var userCheck = _context.UserLogins.Where(x => x.Username == userLogin.Username).SingleOrDefault();
+            if (userCheck != null)
+            {
+                if (userCheck.Id.ToString() != userLoginId)
+                {
+                    return Ok("Username");
+                }
+            }
+
+            userCheck = _context.UserLogins.Where(x => x.Email == userLogin.Email).SingleOrDefault();
+            if (userCheck != null)
+            {
+                if (userCheck.Id.ToString() != userLoginId)
+                {
+                    return Ok("Email");
+                }
+            }
+
+            var userLoginOld = _context.UserLogins.Find(Convert.ToInt64(userLoginId));
+
+            userLogin.Id = userLoginOld.Id;
+            userLogin.Password = userLoginOld.Password;
+            userLogin.MakerId = userLoginOld.MakerId;
+            userLogin.BedrijfId = userLoginOld.BedrijfId;
+            userLogin.UserTypeId = userLoginOld.UserTypeId;
+            userLogin.AdminId = userLoginOld.AdminId;
+
+            _context.Entry(userLoginOld).State = EntityState.Detached;
+
+            _context.Entry(userLogin).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+                       
         }
 
         // POST: api/UserLogin
@@ -125,6 +240,7 @@ namespace ApplicationChallenge.Controllers
 
             return CreatedAtAction("GetUserLogin", new { id = userLogin.Id }, userLogin);
         }
+
 
         // POST: api/UserLogin
         [HttpPost("AddLoginMaker")]

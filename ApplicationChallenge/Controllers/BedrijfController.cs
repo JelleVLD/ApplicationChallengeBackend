@@ -25,13 +25,14 @@ namespace ApplicationChallenge.Controllers
 
         // GET: api/Bedrijf
         [HttpGet] [Permission("Bedrijf.OnGet")]
+
         public async Task<ActionResult<IEnumerable<Bedrijf>>> GetBedrijven()
         {
             return await _context.Bedrijven.ToListAsync();
         }
 
         // GET: api/Bedrijf/5
-        [HttpGet("{id}")] [Permission("Bedrijf.OnGetID")]
+        [HttpGet("{id}")] 
         public async Task<ActionResult<Bedrijf>> GetBedrijf(long id)
         {
             var bedrijf = await _context.Bedrijven.Include(o=> o.Opdrachten).Where(i => i.Id == id).FirstOrDefaultAsync();

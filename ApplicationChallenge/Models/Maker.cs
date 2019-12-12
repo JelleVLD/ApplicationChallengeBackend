@@ -16,7 +16,7 @@ namespace ApplicationChallenge.Models
         public string Straat { get; set; }
         public string Nr { get; set; }
         public string Stad { get; set; }
-        public int Postcode { get; set; }
+        public string Postcode { get; set; }
         public DateTime GeboorteDatum { get; set; }
         public string Biografie { get; set; }
         public string LinkedInLink { get; set; }
