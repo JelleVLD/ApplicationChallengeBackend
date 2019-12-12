@@ -45,7 +45,7 @@ namespace ApplicationChallenge.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Opdracht>> GetOpdracht(long id)
         {
-            var opdracht = await _context.Opdrachten.Include(o => o.Bedrijf).FirstOrDefaultAsync(o => o.Id == id);
+            var opdracht = await _context.Opdrachten.Include(o => o.Bedrijf).Include(o => o.OpdrachtMakers).Include(o => o.Makers).FirstOrDefaultAsync(o => o.Id == id);
             //var opdracht = await _context.Opdrachten.FindAsync(id);
 
             if (opdracht == null)
