@@ -93,6 +93,10 @@ namespace ApplicationChallenge.Controllers
             {
                 return opdrachtmaker;
             }
+            else
+            {
+                return NoContent();
+            }
 
             return NoContent();
         }
