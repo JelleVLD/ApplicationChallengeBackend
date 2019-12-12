@@ -10,24 +10,6 @@ namespace ApplicationChallenge.Models
     {
         public static void Initialize(ApplicationContext context)
         {
-
-            string HashPassword(string password)
-            {
-                byte[] salt;
-                new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-
-                var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 2000);
-                byte[] hash = pbkdf2.GetBytes(20);
-
-                byte[] hashBytes = new byte[36];
-                Array.Copy(salt, 0, hashBytes, 0, 16);
-                Array.Copy(hash, 0, hashBytes, 16, 20);
-
-                string PasswordHash = Convert.ToBase64String(hashBytes);
-
-                return PasswordHash;
-            }
-
             context.Database.EnsureCreated();
             if (context.Bedrijven.Any())
             {
@@ -164,6 +146,7 @@ namespace ApplicationChallenge.Models
                                 new BedrijfTag { BedrijfId = 1, TagId =4 }
                                 );
             }
+
             if (context.Permissions.Any())
             {
                 return;
@@ -182,6 +165,23 @@ namespace ApplicationChallenge.Models
                                 );
             }
             context.SaveChanges();
+
+            string HashPassword(string password)
+            {
+                byte[] salt;
+                new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+                var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 2000);
+                byte[] hash = pbkdf2.GetBytes(20);
+
+                byte[] hashBytes = new byte[36];
+                Array.Copy(salt, 0, hashBytes, 0, 16);
+                Array.Copy(hash, 0, hashBytes, 16, 20);
+
+                string PasswordHash = Convert.ToBase64String(hashBytes);
+
+                return PasswordHash;
+            }
         }
 
     }

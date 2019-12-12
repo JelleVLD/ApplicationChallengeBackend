@@ -23,10 +23,7 @@ namespace ApplicationChallenge.Models
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<SkillMaker> SkillMakers { get; set; }
-
         public DbSet<UserLogin> UserLogins { get; set; }
-
-
         public DbSet<BedrijfTag> BedrijfTags { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,7 +39,6 @@ namespace ApplicationChallenge.Models
             modelBuilder.Entity<Skill>().ToTable("Skill");
             modelBuilder.Entity<SkillMaker>().ToTable("SkillMaker");
             modelBuilder.Entity<Tag>().ToTable("Tag");
-
             modelBuilder.Entity<UserType>().ToTable("UserType");
             modelBuilder.Entity<Admin>().ToTable("Admin");
             modelBuilder.Entity<Permission>().ToTable("Permission");
