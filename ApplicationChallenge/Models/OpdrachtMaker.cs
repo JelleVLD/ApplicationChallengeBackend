@@ -16,6 +16,7 @@ namespace ApplicationChallenge.Models
 
         public long OpdrachtId { get; set; }
         public Opdracht Opdracht { get; set; }
+        public bool Geaccepteerd { get; set; }
 
     }
 }
