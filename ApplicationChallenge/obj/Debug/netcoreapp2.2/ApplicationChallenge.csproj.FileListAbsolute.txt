@@ -27,22 +27,6 @@ D:\school\Angular\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\net
 D:\school\Angular\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorTargetAssemblyInfo.cache
 D:\school\Angular\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.dll
 D:\school\Angular\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.pdb
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\appsettings.Development.json
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\appsettings.json
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.deps.json
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.runtimeconfig.json
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.runtimeconfig.dev.json
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.dll
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.pdb
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.csprojAssemblyReference.cache
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorAssemblyInfo.cache
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorAssemblyInfo.cs
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.AssemblyInfoInputs.cache
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.AssemblyInfo.cs
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorTargetAssemblyInfo.cache
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.dll
-C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.pdb
 D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.deps.json
 D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.runtimeconfig.json
 D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.runtimeconfig.dev.json
@@ -89,3 +73,19 @@ D:\school\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2
 D:\school\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorTargetAssemblyInfo.cache
 D:\school\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.dll
 D:\school\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.pdb
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\appsettings.Development.json
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\appsettings.json
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.deps.json
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.runtimeconfig.json
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.runtimeconfig.dev.json
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.dll
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.pdb
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.csprojAssemblyReference.cache
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorAssemblyInfo.cache
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorAssemblyInfo.cs
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.AssemblyInfoInputs.cache
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.AssemblyInfo.cs
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorTargetAssemblyInfo.cache
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.dll
+C:\3 ITF\Angular\BackEnd\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.pdb
