@@ -30,7 +30,21 @@ namespace ApplicationChallenge.Controllers
 
         // GET: api/Review/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Review>> GetReview(long id)
+        public async Task<ActionResult<IList<Review>>> GetReview(long id)
+        {
+            var review = await _context.Reviews.Include(r => r.Maker).Where(r => r.BedrijfId == id).Where(r => r.NaarBedrijf == true).ToListAsync();
+
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            return review;
+        }
+
+        // GET: api/Review/5
+        [HttpGet("getbyid{id}")]
+        public async Task<ActionResult<Review>> GetReviewById(long id)
         {
             var review = await _context.Reviews.FindAsync(id);
 
@@ -73,10 +87,9 @@ namespace ApplicationChallenge.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReview(long id, Review review)
         {
-            if (id != review.Id)
-            {
-                return BadRequest();
-            }
+            
+
+            review.Id = id;
 
             _context.Entry(review).State = EntityState.Modified;
 
@@ -94,6 +107,35 @@ namespace ApplicationChallenge.Controllers
                 {
                     throw;
                 }
+            }
+
+            return NoContent();
+        }
+
+        // PUT: api/Review/5
+        [HttpPut("isreviewed{id}")]
+        public async Task<ActionResult<IList<Review>>> PutReviewed(long id, Review review)
+        {
+            var vreview = await _context.Reviews.Where(r => r.MakerId == review.MakerId).Where(r => r.BedrijfId == review.BedrijfId).Where(r => r.NaarBedrijf == true).ToListAsync();
+
+
+            int count = 0;
+
+            var reviewStatus = new List<Review>();
+
+            foreach (var r in vreview)
+            {
+                reviewStatus.Add(new Review { Id = r.Id });
+                count++;
+            }
+
+            if (count > 0)
+            {
+                return reviewStatus;
+            }
+            else
+            {
+                return NoContent();
             }
 
             return NoContent();
