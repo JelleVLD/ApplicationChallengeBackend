@@ -58,12 +58,12 @@ namespace ApplicationChallenge.Controllers
 
         // GET: api/Review/5
         [HttpGet("getReviewsBedrijf/{id}")]
-        public async Task<ActionResult<int>> GetReviewBedrijf(long id)
+        public async Task<ActionResult<double>> GetReviewBedrijf(long id)
         {
             var review = await _context.Reviews.Include(r => r.Maker).Include(r => r.Bedrijf).Where(r => r.BedrijfId == id).Where(r => r.NaarBedrijf == true).ToListAsync();
 
-            int count = 0;
-            int totaal = 0;
+            double count = 0;
+            double totaal = 0;
 
             foreach(var r in review)
             {
@@ -80,7 +80,9 @@ namespace ApplicationChallenge.Controllers
                 return NotFound();
             }
 
-            return totaal / count;
+            double t = totaal / count;
+
+            return t;
         }
 
         // PUT: api/Review/5
