@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationChallenge.Services
 {
@@ -71,22 +72,26 @@ namespace ApplicationChallenge.Services
             var userType = _apiContext.UserTypes.SingleOrDefault(x => x.Id == user.UserTypeId);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var gebruikerId="";
-            if (user.MakerId.ToString() != "")
+            user = _apiContext.UserLogins
+                    .Where(y => y.Id == user.Id)
+                    .Include(x => x.Maker)
+                    .Include(x => x.Bedrijf)
+                    .Include(x => x.Admin)
+                    .Include(x => x.UserType)
+                    .SingleOrDefault();
+
+            var gebruikerId = "";
+            if (user.AdminId != null)
+            {
+                gebruikerId = user.AdminId.ToString();
+            } else if (user.BedrijfId != null)
+            {
+                gebruikerId = user.BedrijfId.ToString();
+            } else if (user.MakerId != null)
             {
                 gebruikerId = user.MakerId.ToString();
             }
-            else
-            {
-                if (user.BedrijfId.ToString() != "")
-                {
-                    gebruikerId= user.BedrijfId.ToString();
-                }
-                else
-                {
-                   gebruikerId= user.AdminId.ToString();
-                }
-            }
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

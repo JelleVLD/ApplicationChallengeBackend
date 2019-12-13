@@ -67,6 +67,34 @@ namespace ApplicationChallenge.Controllers
             return loginInfo;
         }
 
+        // GET: api/UserLogin/userInfo
+        [Authorize]
+        [HttpGet("userInfo")]
+        public async Task<ActionResult<UserLogin>> GetUserInfo()
+        {
+            var id = User.Claims.FirstOrDefault(c => c.Type == "UserLoginId").Value;
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var userInfo = await _context.UserLogins
+                .Where(x => x.Id == Convert.ToInt64(id))
+                .Include(x => x.Maker)
+                .Include(x => x.Bedrijf)
+                .Include(x => x.Admin)
+                .Include(x => x.UserType)
+                .SingleOrDefaultAsync();
+
+            if (userInfo == null)
+            {
+                return NotFound();
+            }
+
+            return userInfo;
+        }
+
         public async Task<ActionResult<UserLogin>> GetUserLogin(long id)
         {
             var userLogin = await _context.UserLogins.FindAsync(id);
