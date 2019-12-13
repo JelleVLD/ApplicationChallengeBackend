@@ -13047,9 +13047,10 @@
     ]
   },
   "packageFolders": {
+  	"C:\\Users\\Sacha\\.nuget\\packages\\": {},
     "C:\\Users\\Eigenaar\\.nuget\\packages\\": {},
 	"C:\\Users\\Agitb\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {},
   },
   "project": {
     "version": "1.0.0",
