@@ -39,9 +39,15 @@ namespace ApplicationChallenge.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserLogin>>> GetUserLogins()
         {
-            return await _context.UserLogins.ToListAsync();
+            return await _context.UserLogins.Include(m => m.Maker).Include(b => b.Bedrijf).Include(a => a.Admin).ToListAsync();
         }
 
+        // GET: api/UserLogin/{userTypeId}
+        [HttpGet("{userTypeId}")]
+        public async Task<ActionResult<IEnumerable<UserLogin>>> GetUserLoginsWhereUserTypeId(int userTypeId)
+        {
+            return await _context.UserLogins.Include(m => m.Maker).Include(b => b.Bedrijf).Include(a => a.Admin).Where(u => u.UserTypeId == userTypeId).ToListAsync();
+        }
 
         // GET: api/UserLogin/5
         [Authorize]
