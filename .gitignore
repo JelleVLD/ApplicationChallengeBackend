@@ -338,3 +338,8 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+# Custom
+/.vs/ApplicationChallenge/v16/
+/ApplicationChallenge/obj/Debug/
+/ApplicationChallenge/obj/project.assets.json
