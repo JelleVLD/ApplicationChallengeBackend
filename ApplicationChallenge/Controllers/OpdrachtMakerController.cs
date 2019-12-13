@@ -127,6 +127,24 @@ namespace ApplicationChallenge.Controllers
             return opdrachtMaker;
         }
 
+        // DELETE: api/OpdrachtMaker/makerid/5
+        [HttpDelete("makerId/{makerId}")]
+        public async Task<ActionResult<IEnumerable<OpdrachtMaker>>> DeleteOpdrachtMakerWhereMakerId(int makerId)
+        {
+            var opdrachtMakers = await _context.OpdrachtMakers.Where(m => m.MakerId == makerId).ToListAsync();
+            if (opdrachtMakers == null)
+            {
+                return NotFound();
+            }
+            foreach (var opdrachtMaker in opdrachtMakers)
+            {
+                _context.OpdrachtMakers.Remove(opdrachtMaker);
+            }
+            await _context.SaveChangesAsync();
+
+            return opdrachtMakers;
+        }
+
         private bool OpdrachtMakerExists(long id)
         {
             return _context.OpdrachtMakers.Any(e => e.Id == id);
