@@ -167,7 +167,8 @@ namespace ApplicationChallenge.Models
                                 new Permission { Title = "BedrijfTag.OnGetBedrijfID", UserTypeId = 3 },
                                 new Permission { Title = "BedrijfTag.OnDelete", UserTypeId = 3 },
                                 new Permission { Title = "BedrijfTag.OnCreate", UserTypeId = 3 },
-                                new Permission { Title = "Bedrijf.OnGet", UserTypeId = 1 }
+                                new Permission { Title = "Bedrijf.OnGet", UserTypeId = 1 },
+                                new Permission { Title = "OpdrachtMaker.OnGetId", UserTypeId = 3 }
                                 );
             }
             context.SaveChanges();
