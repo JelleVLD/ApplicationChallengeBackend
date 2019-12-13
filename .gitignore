@@ -343,3 +343,4 @@ healthchecksdb
 /.vs/ApplicationChallenge/v16/
 /ApplicationChallenge/obj/Debug/
 /ApplicationChallenge/obj/project.assets.json
+/ApplicationChallenge/bin/Debug/netcoreapp2.2
