@@ -1,5 +1,9 @@
 {
   "version": 1,
+<<<<<<< HEAD
   "dgSpecHash": "RGEjrmQeKh9auJhuC6mtXmcbw+F2vRAFxPl/g+KVPvYjW4tfESZP3Nz4o0q43QMLlLLsJqg5uwgK9pN4+vhJfw==",
+=======
+  "dgSpecHash": "Gro4sgeHdckquTPMt4W7Ec4th25/MDARhQmqHRxjNmMPiFKu5PzdtdmW7qdrx/CJWDX5BfOjrixISwweEosyDg==",
+>>>>>>> extra permissions opdrachtTags + prep opdrachtMaker model
   "success": true
 }

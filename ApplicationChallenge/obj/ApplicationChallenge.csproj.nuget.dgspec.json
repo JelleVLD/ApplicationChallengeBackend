@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "D:\\Application Challenge\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj": {}
   },
   "projects": {
@@ -12,12 +13,29 @@
         "projectPath": "D:\\Application Challenge\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj",
         "packagesPath": "C:\\Users\\Sacha\\.nuget\\packages\\",
         "outputPath": "D:\\Application Challenge\\ApplicationChallengeBackend\\ApplicationChallenge\\obj\\",
+=======
+    "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallenge\\ApplicationChallenge.csproj": {}
+  },
+  "projects": {
+    "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallenge\\ApplicationChallenge.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallenge\\ApplicationChallenge.csproj",
+        "projectName": "ApplicationChallenge",
+        "projectPath": "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallenge\\ApplicationChallenge.csproj",
+        "packagesPath": "C:\\Users\\Eigenaar\\.nuget\\packages\\",
+        "outputPath": "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallenge\\obj\\",
+>>>>>>> extra permissions opdrachtTags + prep opdrachtMaker model
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
+<<<<<<< HEAD
           "C:\\Users\\Sacha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+          "C:\\Users\\Eigenaar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> extra permissions opdrachtTags + prep opdrachtMaker model
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -68,10 +86,16 @@
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
