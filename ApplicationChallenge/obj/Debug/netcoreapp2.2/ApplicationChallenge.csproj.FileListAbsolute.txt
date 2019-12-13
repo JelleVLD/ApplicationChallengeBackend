@@ -34,11 +34,8 @@ D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\bin\De
 D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\bin\Debug\netcoreapp2.2\ApplicationChallenge.pdb
 D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.csprojAssemblyReference.cache
 D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.csproj.CoreCompileInputs.cache
-D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorAssemblyInfo.cache
-D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorAssemblyInfo.cs
 D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.AssemblyInfoInputs.cache
 D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.AssemblyInfo.cs
-D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorTargetAssemblyInfo.cache
 D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.dll
 D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.pdb
 D:\School\3ITF\Angular\ApplicationChallenge\ApplicationChallengeBackend\ApplicationChallenge\bin\Debug\netcoreapp2.2\appsettings.Development.json
