@@ -74,7 +74,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Opdrachten.AddRange(
-                                new Opdracht {BedrijfId=1,Titel="Application Challenge",Omschrijving="Dit is een Challenge voor de studenten van Thomas More.",Postcode="2440",WoonPlaats="Geel",Straat="KleinhoefStraat",StraatNr="4",open=true }
+                                new Opdracht {BedrijfId=1,Titel="Application Challenge",Omschrijving="Dit is een Challenge voor de studenten van Thomas More.",Postcode="2440",WoonPlaats="Geel",Straat="KleinhoefStraat",StraatNr="4",open=true,klaar=false }
                                 );
             }
             if (context.Tags.Any())

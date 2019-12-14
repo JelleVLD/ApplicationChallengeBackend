@@ -18,6 +18,7 @@ namespace ApplicationChallenge.Models
         public string Postcode { get; set; }
         public long? BedrijfId { get; set; }
         public bool open { get; set; }
+        public bool klaar { get; set; }
         public ICollection<Maker> Makers { get; set; }
         public ICollection<OpdrachtMaker> OpdrachtMakers { get; set; }
         public Bedrijf Bedrijf { get; set; }
