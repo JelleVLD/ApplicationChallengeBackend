@@ -69,6 +69,12 @@ namespace ApplicationChallenge.Services
                 return null;
             }
 
+            if (user.Verified == false)
+            {
+                user.Password = null;
+                return user;
+            }
+
             var userType = _apiContext.UserTypes.SingleOrDefault(x => x.Id == user.UserTypeId);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);

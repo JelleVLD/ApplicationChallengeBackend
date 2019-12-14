@@ -24,6 +24,7 @@ namespace ApplicationChallenge.Models
         public Bedrijf Bedrijf { get; set; }
         public Admin Admin { get; set; }
         public UserType UserType{get;set;}
+        public bool Verified { get; set; }
 
     }
 }
