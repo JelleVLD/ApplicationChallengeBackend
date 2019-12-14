@@ -113,9 +113,9 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.UserLogins.AddRange(
-                                new UserLogin { Username = "Admin", Password = HashPassword("Admin1"), UserTypeId = 1, AdminId = 1, Email = "r0705177@student.thomasmore.be" },
-                                new UserLogin { Username = "Student", Password = HashPassword("Student1"), UserTypeId = 2, MakerId = 1, Email = "r0697191@student.thomasmore.be", },
-                                new UserLogin { Username = "Bedrijf", Password = HashPassword("Bedrijf1"), UserTypeId = 3, BedrijfId = 1, Email = "r0123456@student.thomasmore.be", }
+                                new UserLogin { Username = "Admin", Password = HashPassword("Admin1"), UserTypeId = 1, AdminId = 1, Email = "r0705177@student.thomasmore.be", Verified = true },
+                                new UserLogin { Username = "Student", Password = HashPassword("Student1"), UserTypeId = 2, MakerId = 1, Email = "r0697191@student.thomasmore.be", Verified = true },
+                                new UserLogin { Username = "Bedrijf", Password = HashPassword("Bedrijf1"), UserTypeId = 3, BedrijfId = 1, Email = "r0123456@student.thomasmore.be", Verified = true }
                                 );
             }
             if (context.SkillMakers.Any())
