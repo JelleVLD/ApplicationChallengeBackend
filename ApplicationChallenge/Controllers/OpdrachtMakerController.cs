@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
+using ApplicationChallenge.Attributes;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -39,6 +40,20 @@ namespace ApplicationChallenge.Controllers
             }
 
             return opdrachtMaker;
+        }
+        [HttpGet]
+        [Route("getid/{opdrachtId}")]
+        [Permission("OpdrachtMaker.OnGetId")]
+        public async Task<ActionResult<IEnumerable<OpdrachtMaker>>> GetOpdrachtMakers(long opdrachtId)
+        {
+            var opdrachtMakers = await _context.OpdrachtMakers.Include(m => m.Maker).Where(o => o.OpdrachtId == opdrachtId).ToListAsync();
+
+            if (opdrachtMakers == null)
+            {
+                return NotFound();
+            }
+
+            return opdrachtMakers;
         }
 
         // PUT: api/OpdrachtMaker/5
