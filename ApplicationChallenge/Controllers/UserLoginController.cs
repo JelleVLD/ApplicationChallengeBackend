@@ -147,6 +147,7 @@ namespace ApplicationChallenge.Controllers
                 userLogin.AdminId = userOld.AdminId;
                 userLogin.UserTypeId = userOld.UserTypeId;
                 userLogin.Id = id;
+                userLogin.Verified = true;
 
                 _context.Entry(userOld).State = EntityState.Detached;
 
@@ -201,6 +202,7 @@ namespace ApplicationChallenge.Controllers
             userLogin.BedrijfId = userLoginOld.BedrijfId;
             userLogin.UserTypeId = userLoginOld.UserTypeId;
             userLogin.AdminId = userLoginOld.AdminId;
+            userLogin.Verified = true;
 
             userLogin.Password = HashPassword(userLogin.Password);
 
@@ -250,6 +252,7 @@ namespace ApplicationChallenge.Controllers
             userLogin.BedrijfId = userLoginOld.BedrijfId;
             userLogin.UserTypeId = userLoginOld.UserTypeId;
             userLogin.AdminId = userLoginOld.AdminId;
+            userLogin.Verified = true;
 
             _context.Entry(userLoginOld).State = EntityState.Detached;
 
@@ -439,7 +442,6 @@ namespace ApplicationChallenge.Controllers
             return _context.UserLogins.Any(e => e.Id == id);
         }
 
-
         [HttpPost("verifyUser")]
         public async Task<ActionResult<verifyUser>> VerifyUser(verifyUser verifyUser)
         {
@@ -556,7 +558,6 @@ namespace ApplicationChallenge.Controllers
 
         private static string CreateRandomPassword(int length = 15)
         {
-            // Create a string of characters, numbers, special characters that allowed in the password  
             string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?_-";
             Random random = new Random();
 
