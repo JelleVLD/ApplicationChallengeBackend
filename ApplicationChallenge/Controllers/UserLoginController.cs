@@ -33,7 +33,14 @@ namespace ApplicationChallenge.Controllers
         {
             var gebruiker = _userService.Authenticate(userParam.Username, userParam.Password);
             if (gebruiker == null)
+            {
                 return BadRequest(new { message = "Username or password is incorrect" });
+            }
+
+            if (gebruiker.Verified == false)
+            {
+                return Ok("Verify");
+            }
             return Ok(gebruiker);
         }
         // GET: api/UserLogin
@@ -274,6 +281,7 @@ namespace ApplicationChallenge.Controllers
             string[] tags = data.tags;
 
             userLogin.UserTypeId = 2;
+            userLogin.Verified = false;
 
             if (_context.UserLogins.Where(x => x.Email == userLogin.Email).SingleOrDefault() != null)
             {
@@ -316,6 +324,33 @@ namespace ApplicationChallenge.Controllers
             _context.UserLogins.Add(userLogin);
             await _context.SaveChangesAsync();
 
+            MailAddress to = new MailAddress(userLogin.Email);
+            MailAddress from = new MailAddress("donotreply@centtask.be");
+
+            MailMessage message = new MailMessage(from, to);
+            message.Subject = "Bevestig je account bij Centask";
+            message.Body = "" +
+                "<h1>Welkom bij Centask!</h1>" +
+                "<p>Gelieve je account te bevestigen: " +
+                "<a href='url'>http://localhost:4200/verifyUser?userLoginId=" + userLogin.Id + "</a>";
+
+            message.IsBodyHtml = true;
+
+            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            {
+                Credentials = new NetworkCredential("9533f03187ee7c", "3058369c7f2f3b"),
+                EnableSsl = true
+            };
+
+            try
+            {
+                client.Send(message);
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
             return CreatedAtAction("GetUserLogin", new { id = userLogin.Id }, userLogin);
         }
 
@@ -327,6 +362,7 @@ namespace ApplicationChallenge.Controllers
             Bedrijf bedrijf = data.bedrijf;
 
             userLogin.UserTypeId = 3;
+            userLogin.Verified = false;
 
             if (_context.UserLogins.Where(x => x.Email == userLogin.Email).SingleOrDefault() != null)
             {
@@ -352,6 +388,33 @@ namespace ApplicationChallenge.Controllers
             _context.UserLogins.Add(userLogin);
             await _context.SaveChangesAsync();
 
+            MailAddress to = new MailAddress(userLogin.Email);
+            MailAddress from = new MailAddress("donotreply@centtask.be");
+
+            MailMessage message = new MailMessage(from, to);
+            message.Subject = "Bevestig je account bij Centask";
+            message.Body = "" +
+                "<h1>Welkom bij Centask!</h1>" +
+                "<p>Gelieve je account te bevestigen: " +
+                "<a href='url'>http://localhost:4200/verifyUser?userLoginId=" + userLogin.Id + "</a>";
+
+            message.IsBodyHtml = true;
+
+            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            {
+                Credentials = new NetworkCredential("9533f03187ee7c", "3058369c7f2f3b"),
+                EnableSsl = true
+            };
+
+            try
+            {
+                client.Send(message);
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
             return CreatedAtAction("GetUserLogin", new { id = userLogin.Id }, userLogin);
         }
 
@@ -376,8 +439,42 @@ namespace ApplicationChallenge.Controllers
             return _context.UserLogins.Any(e => e.Id == id);
         }
 
+
+        [HttpPost("verifyUser")]
+        public async Task<ActionResult<verifyUser>> VerifyUser(verifyUser verifyUser)
+        {
+            var id = verifyUser.Id;
+
+            var userLoginOld = await _context.UserLogins.Where(x => x.Id == id).SingleOrDefaultAsync();
+
+            if (userLoginOld == null)
+            {
+                return Ok("Verkeerd");
+            }
+
+
+            UserLogin userLogin = new UserLogin();
+
+            userLogin.Id = userLoginOld.Id;
+            userLogin.Username = userLoginOld.Username;
+            userLogin.Email = userLoginOld.Email;
+            userLogin.MakerId = userLoginOld.MakerId;
+            userLogin.BedrijfId = userLoginOld.BedrijfId;
+            userLogin.UserTypeId = userLoginOld.UserTypeId;
+            userLogin.AdminId = userLoginOld.AdminId;
+            userLogin.Password = userLoginOld.Password;
+
+            userLogin.Verified = true;
+
+            _context.Entry(userLoginOld).State = EntityState.Detached;
+
+            _context.Entry(userLogin).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
         [HttpPost("resetPassword")]
-        public void SendEmail(resetPassword emailadres)
+        public void restPassword(resetPassword emailadres)
         {
             var email = emailadres.email;
             var userLoginOld = _context.UserLogins.Where(x => x.Email == email).SingleOrDefault();
@@ -413,6 +510,7 @@ namespace ApplicationChallenge.Controllers
             MailMessage message = new MailMessage(from, to);
             message.Subject = "Wachtwoord opnieuw ingesteld";
             message.Body = "" +
+
                 "<h1>Wachtwoord opniew ingesteld</h1>" +
                 "<p>U nieuw wachtwoord is '" +
                 password +
@@ -435,6 +533,9 @@ namespace ApplicationChallenge.Controllers
             }
             _context.SaveChangesAsync();
         }
+
+
+        // HELPERS
 
         string HashPassword(string password)
         {
@@ -461,6 +562,7 @@ namespace ApplicationChallenge.Controllers
 
             // Select one random character at a time from the string  
             // and create an array of chars  
+
             char[] chars = new char[length];
             for (int i = 0; i < length; i++)
             {
