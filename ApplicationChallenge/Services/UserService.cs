@@ -75,6 +75,7 @@ namespace ApplicationChallenge.Services
             user = _apiContext.UserLogins
                     .Where(y => y.Id == user.Id)
                     .Include(x => x.Maker)
+                    .ThenInclude(maker => maker.Interesses)
                     .Include(x => x.Bedrijf)
                     .Include(x => x.Admin)
                     .Include(x => x.UserType)
@@ -109,6 +110,8 @@ namespace ApplicationChallenge.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
             user.Password = null;
+
+
             return user;
         }
 

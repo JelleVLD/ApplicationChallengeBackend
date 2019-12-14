@@ -9,5 +9,6 @@ namespace ApplicationChallenge.Models.Dto
     {
         public Maker maker;
         public UserLogin userlogin;
+        public string[] tags;
     }
 }

@@ -99,3 +99,4 @@ D:\School\3ITF\Angular\ApplicationChallenge\Backend\ApplicationChallengeBackend\
 D:\School\3ITF\Angular\ApplicationChallenge\Backend\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.AssemblyInfo.cs
 D:\School\3ITF\Angular\ApplicationChallenge\Backend\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.dll
 D:\School\3ITF\Angular\ApplicationChallenge\Backend\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.pdb
+

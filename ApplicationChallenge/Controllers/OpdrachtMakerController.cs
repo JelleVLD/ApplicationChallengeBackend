@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
+using ApplicationChallenge.Attributes;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -39,6 +40,20 @@ namespace ApplicationChallenge.Controllers
             }
 
             return opdrachtMaker;
+        }
+        [HttpGet]
+        [Route("getid/{opdrachtId}")]
+        [Permission("OpdrachtMaker.OnGetId")]
+        public async Task<ActionResult<IEnumerable<OpdrachtMaker>>> GetOpdrachtMakers(long opdrachtId)
+        {
+            var opdrachtMakers = await _context.OpdrachtMakers.Include(m => m.Maker).Where(o => o.OpdrachtId == opdrachtId).ToListAsync();
+
+            if (opdrachtMakers == null)
+            {
+                return NotFound();
+            }
+
+            return opdrachtMakers;
         }
 
         // PUT: api/OpdrachtMaker/5
@@ -125,6 +140,24 @@ namespace ApplicationChallenge.Controllers
             await _context.SaveChangesAsync();
 
             return opdrachtMaker;
+        }
+
+        // DELETE: api/OpdrachtMaker/makerid/5
+        [HttpDelete("makerId/{makerId}")]
+        public async Task<ActionResult<IEnumerable<OpdrachtMaker>>> DeleteOpdrachtMakerWhereMakerId(int makerId)
+        {
+            var opdrachtMakers = await _context.OpdrachtMakers.Where(m => m.MakerId == makerId).ToListAsync();
+            if (opdrachtMakers == null)
+            {
+                return NotFound();
+            }
+            foreach (var opdrachtMaker in opdrachtMakers)
+            {
+                _context.OpdrachtMakers.Remove(opdrachtMaker);
+            }
+            await _context.SaveChangesAsync();
+
+            return opdrachtMakers;
         }
 
         private bool OpdrachtMakerExists(long id)

@@ -26,7 +26,7 @@ namespace ApplicationChallenge.Controllers
         public async Task<ActionResult<IEnumerable<SkillMaker>>> GetSkillMakers()
         {
             return await _context.SkillMakers.ToListAsync();
-        }
+        }        
 
         // GET: api/SkillMaker/5
         [HttpGet("{id}")]
@@ -96,6 +96,24 @@ namespace ApplicationChallenge.Controllers
             await _context.SaveChangesAsync();
 
             return skillMaker;
+        }        
+        
+        // DELETE: api/SkillMaker/5
+        [HttpDelete("makerId/{makerId}")]
+        public async Task<ActionResult<IEnumerable<SkillMaker>>> DeleteSkillMakerWhereMakerId(int makerId)
+        {
+            var skillMakers = await _context.SkillMakers.Where(m => m.MakerId == makerId).ToListAsync();
+            if (skillMakers == null)
+            {
+                return NotFound();
+            }
+            foreach (var skillMaker in skillMakers)
+            {
+                _context.SkillMakers.Remove(skillMaker);
+            }
+            await _context.SaveChangesAsync();
+
+            return skillMakers;
         }
 
         private bool SkillMakerExists(long id)

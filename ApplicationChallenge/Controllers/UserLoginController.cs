@@ -39,9 +39,15 @@ namespace ApplicationChallenge.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserLogin>>> GetUserLogins()
         {
-            return await _context.UserLogins.ToListAsync();
+            return await _context.UserLogins.Include(m => m.Maker).Include(b => b.Bedrijf).Include(a => a.Admin).ToListAsync();
         }
 
+        // GET: api/UserLogin/{userTypeId}
+        [HttpGet("{userTypeId}")]
+        public async Task<ActionResult<IEnumerable<UserLogin>>> GetUserLoginsWhereUserTypeId(int userTypeId)
+        {
+            return await _context.UserLogins.Include(m => m.Maker).Include(b => b.Bedrijf).Include(a => a.Admin).Where(u => u.UserTypeId == userTypeId).ToListAsync();
+        }
 
         // GET: api/UserLogin/5
         [Authorize]
@@ -276,6 +282,7 @@ namespace ApplicationChallenge.Controllers
         {
             UserLogin userLogin = data.userlogin;
             Maker maker = data.maker;
+            string[] tags = data.tags;
 
             userLogin.UserTypeId = 2;
 
@@ -291,6 +298,28 @@ namespace ApplicationChallenge.Controllers
 
             _context.Makers.Add(maker);
             await _context.SaveChangesAsync();
+
+            if (tags != null)
+            {
+                foreach(string tag in tags)
+                {
+                    Tag tagObject = await _context.Tags.Where(x => x.Naam == tag).SingleOrDefaultAsync();
+                    if (tagObject == null)
+                    {
+                        tagObject = new Tag();
+                        tagObject.Naam = tag;
+
+                        _context.Tags.Add(tagObject);
+                    }
+
+                    MakerTag makertag = new MakerTag();
+                    makertag.MakerId = maker.Id;
+                    makertag.Interest = 1;
+                    makertag.TagId = tagObject.Id;
+                    makertag.SelfSet = true;
+                    _context.MakerTags.Add(makertag);
+                }
+            }
 
             userLogin.MakerId = maker.Id;
             userLogin.Password = HashPassword(userLogin.Password);
