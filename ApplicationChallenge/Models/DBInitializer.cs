@@ -187,7 +187,14 @@ namespace ApplicationChallenge.Models
                                 new Permission { Title = "BedrijfTag.OnGetBedrijfID", UserTypeId = 1 },
                                 new Permission { Title = "BedrijfTag.OnDelete", UserTypeId = 1 },
                                 new Permission { Title = "BedrijfTag.OnCreate", UserTypeId = 1 },
-                                new Permission { Title = "Bedrijf.OnGetID", UserTypeId = 1 }
+                                new Permission { Title = "Bedrijf.OnGetID", UserTypeId = 1 },
+                                new Permission { Title = "OpdrachtTag.OnGetBedrijfID", UserTypeId = 1 },
+                                new Permission { Title = "Opdracht.OnPutID", UserTypeId = 1 },
+                                new Permission { Title = "Maker.OnGet", UserTypeId = 1 },
+                                new Permission { Title = "Bedrijf.OnCreate", UserTypeId = 1 },
+                                new Permission { Title = "Review.OnGet", UserTypeId = 1 },
+                                new Permission { Title = "UserLogin.OnGetUserTypeId", UserTypeId = 1 },
+                                new Permission { Title = "Opdracht.OnGet", UserTypeId = 1 }
                                 );
             }
             context.SaveChanges();

@@ -128,6 +128,24 @@ namespace ApplicationChallenge.Controllers
             return makerTags;
         }
 
+        // DELETE: api/MakerTag/makerid/5
+        [HttpDelete("makerId/{makerId}")]
+        public async Task<ActionResult<IEnumerable<MakerTag>>> DeleteMakerTagWhereMakerId(int makerId)
+        {
+            var makerTags = await _context.MakerTags.Where(m => m.MakerId == makerId).ToListAsync();
+            if (makerTags == null)
+            {
+                return NotFound();
+            }
+            foreach (var makerTag in makerTags)
+            {
+                _context.MakerTags.Remove(makerTag);
+            }
+            await _context.SaveChangesAsync();
+
+            return makerTags;
+        }
+
         private bool MakerTagExists(long id)
         {
             return _context.MakerTags.Any(e => e.Id == id);

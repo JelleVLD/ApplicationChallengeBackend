@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
+using ApplicationChallenge.Attributes;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -21,7 +22,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // GET: api/Maker
-        [HttpGet]
+        [HttpGet] [Permission("Maker.OnGet")]
         public async Task<ActionResult<IEnumerable<Maker>>> GetMakers()
         {
             return await _context.Makers.ToListAsync();

@@ -33,6 +33,7 @@ namespace ApplicationChallenge.Controllers
 
         // GET: api/Opdracht
         [HttpGet("open")]
+        [Permission("Opdracht.OnGet")]
         public async Task<ActionResult<IEnumerable<Opdracht>>> GetOpdrachtenOpen()
 
         {
