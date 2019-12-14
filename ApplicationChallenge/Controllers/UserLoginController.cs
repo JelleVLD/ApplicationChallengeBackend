@@ -509,7 +509,8 @@ namespace ApplicationChallenge.Controllers
             MailMessage message = new MailMessage(from, to);
             message.Subject = "Wachtwoord opnieuw ingesteld";
             message.Body = "" +
-                "<h1>Wachtwoord opnieuw ingesteld</h1>" +
+
+                "<h1>Wachtwoord opniew ingesteld</h1>" +
                 "<p>U nieuw wachtwoord is '" +
                 password +
                 "'.";
@@ -556,6 +557,9 @@ namespace ApplicationChallenge.Controllers
         {
             string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?_-";
             Random random = new Random();
+
+            // Select one random character at a time from the string  
+            // and create an array of chars  
 
             char[] chars = new char[length];
             for (int i = 0; i < length; i++)

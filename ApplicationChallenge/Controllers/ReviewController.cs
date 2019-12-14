@@ -152,7 +152,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // PUT: api/Review/5
-        [HttpPut("isreviewed/{id}")]
+        [HttpPut("isreviewed{id}")]
         public async Task<ActionResult<IList<Review>>> PutReviewed(long id, Review review)
         {
             var vreview = await _context.Reviews.Where(r => r.MakerId == review.MakerId).Where(r => r.BedrijfId == review.BedrijfId).Where(r => r.NaarBedrijf == true).ToListAsync();

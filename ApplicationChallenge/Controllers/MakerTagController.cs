@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
+using ApplicationChallenge.Attributes;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -59,32 +60,39 @@ namespace ApplicationChallenge.Controllers
             return makerTag;
         }
 
+        [HttpGet("gettags/{id}")]
+        public async Task<ActionResult<IEnumerable<MakerTag>>> GetMakerTags(long id)
+        {
+            var makerTags = await _context.MakerTags.Include(t => t.Tag).Where(b => b.MakerId == id).ToListAsync();
+
+            if (makerTags == null)
+            {
+                return NotFound();
+            }
+
+            return makerTags;
+        }
+
         // PUT: api/MakerTag/5
-        [HttpPut("{id}")]
+        [HttpPut("edittags/{id}")]
         public async Task<IActionResult> PutMakerTag(long id, MakerTag makerTag)
         {
-            if (id != makerTag.Id)
+
+            var makerTags = await _context.MakerTags.Where(o => o.MakerId == id).Include(t => t.Tag).ToListAsync();
+            if (makerTags == null)
             {
-                return BadRequest();
+                return NotFound();
+            }
+            foreach (var vmakerTag in makerTags)
+            {
+                _context.MakerTags.Remove(vmakerTag);
+
             }
 
-            _context.Entry(makerTag).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MakerTagExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            
+
+            //_context.Add(new MakerTag({ }))
 
             return NoContent();
         }
@@ -99,20 +107,25 @@ namespace ApplicationChallenge.Controllers
             return CreatedAtAction("GetMakerTag", new { id = makerTag.Id }, makerTag);
         }
 
+
+
         // DELETE: api/MakerTag/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<MakerTag>> DeleteMakerTag(long id)
+        public async Task<ActionResult<IEnumerable<MakerTag>>> DeleteMakerTag(long id)
         {
-            var makerTag = await _context.MakerTags.FindAsync(id);
-            if (makerTag == null)
+            var makerTags = await _context.MakerTags.Where(o => o.MakerId == id).ToListAsync();
+            if (makerTags == null)
             {
                 return NotFound();
             }
+            foreach (var makerTag in makerTags)
+            {
+                _context.MakerTags.Remove(makerTag);
 
-            _context.MakerTags.Remove(makerTag);
+            }
             await _context.SaveChangesAsync();
 
-            return makerTag;
+            return makerTags;
         }
 
         private bool MakerTagExists(long id)
