@@ -12,6 +12,7 @@ using System.Net;
 using System.Security.Cryptography;
 using ApplicationChallenge.Models.Dto;
 using System.Security.Claims;
+using System.Net.Mail;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -204,18 +205,6 @@ namespace ApplicationChallenge.Controllers
 
             return Ok();
 
-            //if (_context.UserLogins.Where(x => x.Username == userLogin.Username).SingleOrDefaultAsync() != null)
-            //{
-            //    return Ok("Username");
-            //}
-
-            //if (_context.UserLogins.Where(x => x.Email == userLogin.Email).SingleOrDefaultAsync() != null)
-            //{
-            //    return Ok("Username");
-            //}
-
-
-
         }
 
         [HttpPut("changeUserInfo/{id}")]
@@ -387,6 +376,66 @@ namespace ApplicationChallenge.Controllers
             return _context.UserLogins.Any(e => e.Id == id);
         }
 
+        [HttpPost("resetPassword")]
+        public void SendEmail(resetPassword emailadres)
+        {
+            var email = emailadres.email;
+            var userLoginOld = _context.UserLogins.Where(x => x.Email == email).SingleOrDefault();
+
+            if (userLoginOld == null)
+            {
+                return;
+            }
+
+
+
+            UserLogin userLogin = new UserLogin();
+
+            userLogin.Id = userLoginOld.Id;
+            userLogin.Username = userLoginOld.Username;
+            userLogin.Email = userLoginOld.Email;
+            userLogin.MakerId = userLoginOld.MakerId;
+            userLogin.BedrijfId = userLoginOld.BedrijfId;
+            userLogin.UserTypeId = userLoginOld.UserTypeId;
+            userLogin.AdminId = userLoginOld.AdminId;
+
+            var password = CreateRandomPassword(8);
+
+            userLogin.Password = HashPassword(password);
+
+            _context.Entry(userLoginOld).State = EntityState.Detached;
+
+            _context.Entry(userLogin).State = EntityState.Modified;
+
+            MailAddress to = new MailAddress(email);
+            MailAddress from = new MailAddress("donotreply@centtask.be");
+
+            MailMessage message = new MailMessage(from, to);
+            message.Subject = "Wachtwoord opnieuw ingesteld";
+            message.Body = "" +
+                "<h1>Wachtwoord opniew ingesteld</h1>" +
+                "<p>U nieuw wachtwoord is '" +
+                password +
+                "'.";
+            message.IsBodyHtml = true;
+
+            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            {
+                Credentials = new NetworkCredential("9533f03187ee7c", "3058369c7f2f3b"),
+                EnableSsl = true
+            };
+
+            try
+            {
+                client.Send(message);
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            _context.SaveChangesAsync();
+        }
+
         string HashPassword(string password)
         {
             byte[] salt;
@@ -402,6 +451,22 @@ namespace ApplicationChallenge.Controllers
             string PasswordHash = Convert.ToBase64String(hashBytes);
 
             return PasswordHash;
+        }
+
+        private static string CreateRandomPassword(int length = 15)
+        {
+            // Create a string of characters, numbers, special characters that allowed in the password  
+            string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?_-";
+            Random random = new Random();
+
+            // Select one random character at a time from the string  
+            // and create an array of chars  
+            char[] chars = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                chars[i] = validChars[random.Next(0, validChars.Length)];
+            }
+            return new string(chars);
         }
     }
 }

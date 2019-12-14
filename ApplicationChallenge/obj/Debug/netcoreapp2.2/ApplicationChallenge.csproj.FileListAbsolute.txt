@@ -102,3 +102,6 @@ D:\School\3ITF\Angular\ApplicationChallenge\Backend\ApplicationChallengeBackend\
 D:\School\3ITF\Angular\ApplicationChallenge\Backend\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorAssemblyInfo.cache
 D:\School\3ITF\Angular\ApplicationChallenge\Backend\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorAssemblyInfo.cs
 D:\School\3ITF\Angular\ApplicationChallenge\Backend\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorTargetAssemblyInfo.cache
+D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorAssemblyInfo.cache
+D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorAssemblyInfo.cs
+D:\Application Challenge\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorTargetAssemblyInfo.cache
