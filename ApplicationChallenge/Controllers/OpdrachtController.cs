@@ -31,6 +31,16 @@ namespace ApplicationChallenge.Controllers
             return await opdrachten;
         }
 
+        // GET: api/Opdracht
+        [HttpGet("open")]
+        public async Task<ActionResult<IEnumerable<Opdracht>>> GetOpdrachtenOpen()
+
+        {
+            var opdrachten = _context.Opdrachten.Include(o => o.Bedrijf).Where(o => o.open == true).ToListAsync();
+
+            return await opdrachten;
+        }
+
         //// GET: api/Opdracht
         //[HttpGet("{id}")]
         //public async Task<ActionResult<IEnumerable<Opdracht>>> GetOpdrachtenByTitle(string title)
