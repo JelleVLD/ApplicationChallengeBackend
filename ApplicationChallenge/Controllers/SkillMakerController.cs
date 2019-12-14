@@ -98,7 +98,7 @@ namespace ApplicationChallenge.Controllers
             return skillMaker;
         }        
         
-        // DELETE: api/SkillMaker/5
+        // DELETE: api/SkillMaker/makerid/5
         [HttpDelete("makerId/{makerId}")]
         public async Task<ActionResult<IEnumerable<SkillMaker>>> DeleteSkillMakerWhereMakerId(int makerId)
         {
