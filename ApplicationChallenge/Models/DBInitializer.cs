@@ -63,7 +63,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Makers.AddRange(
-                                new Maker { Nickname = "Student123", Voornaam = "Jelle", Achternaam = "Van Langendonck", LinkedInLink = "https://www.linkedin.com/in/jelle-van-langendonck/", Ervaring = 3, GeboorteDatum = DateTime.Parse("13/11/1998"), Nr = "51", Straat = "Bochtstraat", Postcode = "2550", Stad = "Kontich", Biografie="Ik ben Jelle",Foto="jelle.jpg",CV="cv.pdf"}
+                                new Maker { Nickname = "Student123", Voornaam = "Jelle", Achternaam = "Van Langendonck", LinkedInLink = "https://www.linkedin.com/in/jelle-van-langendonck/", Ervaring = "3 Jaar .NET Software Developer", GeboorteDatum = DateTime.Parse("13/11/1998"), Nr = "51", Straat = "Bochtstraat", Postcode = "2550", Stad = "Kontich", Biografie="Ik ben Jelle",Foto="jelle.jpg",CV="cv.pdf"}
                                 );
             }
             context.SaveChanges();
@@ -84,10 +84,25 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Tags.AddRange(
-                                new Tag {Naam=".NET"},
+                                new Tag { Naam = ".NET" },
                                 new Tag { Naam = "JavaScript" },
                                 new Tag { Naam = "Hackathon" },
-                                new Tag { Naam = "Angular" }
+                                new Tag { Naam = "Angular" },
+                                new Tag { Naam = "React" },
+                                new Tag { Naam = ".NET" },
+                                new Tag { Naam = "ASP.NET" },
+                                new Tag { Naam = "HTML" },
+                                new Tag { Naam = "CSS" },
+                                new Tag { Naam = "Python" },
+                                new Tag { Naam = "NodeJS" },
+                                new Tag { Naam = "Android Dev" },
+                                new Tag { Naam = "Netwerken" },
+                                new Tag { Naam = "Windows" },
+                                new Tag { Naam = "Linux" },
+                                new Tag { Naam = "A.I." },
+                                new Tag { Naam = "Deep Learning" },
+                                new Tag { Naam = "Machine Learning" },
+                                new Tag { Naam = "Java" }
                                 );
             }
             context.SaveChanges();

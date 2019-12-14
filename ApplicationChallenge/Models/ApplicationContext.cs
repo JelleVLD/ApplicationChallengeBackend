@@ -26,6 +26,7 @@ namespace ApplicationChallenge.Models
         public DbSet<UserLogin> UserLogins { get; set; }
         public DbSet<BedrijfTag> BedrijfTags { get; set; }
         public DbSet<Permission> Permissions { get; set; }
+        public DbSet<MakerTag> MakerTags { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -42,6 +43,7 @@ namespace ApplicationChallenge.Models
             modelBuilder.Entity<UserType>().ToTable("UserType");
             modelBuilder.Entity<Admin>().ToTable("Admin");
             modelBuilder.Entity<Permission>().ToTable("Permission");
+            modelBuilder.Entity<MakerTag>().ToTable("MakerTag");
 
         }
 
