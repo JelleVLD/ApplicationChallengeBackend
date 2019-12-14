@@ -20,13 +20,14 @@ namespace ApplicationChallenge.Models
         public DateTime GeboorteDatum { get; set; }
         public string Biografie { get; set; }
         public string LinkedInLink { get; set; }
-        public int Ervaring { get; set; }
+        public string Ervaring { get; set; }
         public string CV { get; set; }
         public string Foto { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
 
         public ICollection<OpdrachtMaker> OpdrachtMakers { get; set; }
+        public ICollection<MakerTag> Interesses { get; set; }
 
     }
 }
