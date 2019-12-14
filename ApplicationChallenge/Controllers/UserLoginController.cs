@@ -147,6 +147,7 @@ namespace ApplicationChallenge.Controllers
                 userLogin.AdminId = userOld.AdminId;
                 userLogin.UserTypeId = userOld.UserTypeId;
                 userLogin.Id = id;
+                userLogin.Verified = true;
 
                 _context.Entry(userOld).State = EntityState.Detached;
 
@@ -201,6 +202,7 @@ namespace ApplicationChallenge.Controllers
             userLogin.BedrijfId = userLoginOld.BedrijfId;
             userLogin.UserTypeId = userLoginOld.UserTypeId;
             userLogin.AdminId = userLoginOld.AdminId;
+            userLogin.Verified = true;
 
             userLogin.Password = HashPassword(userLogin.Password);
 
@@ -250,6 +252,7 @@ namespace ApplicationChallenge.Controllers
             userLogin.BedrijfId = userLoginOld.BedrijfId;
             userLogin.UserTypeId = userLoginOld.UserTypeId;
             userLogin.AdminId = userLoginOld.AdminId;
+            userLogin.Verified = true;
 
             _context.Entry(userLoginOld).State = EntityState.Detached;
 
