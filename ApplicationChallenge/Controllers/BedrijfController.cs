@@ -32,7 +32,8 @@ namespace ApplicationChallenge.Controllers
         }
 
         // GET: api/Bedrijf/5
-        [HttpGet("{id}")] 
+        [HttpGet("{id}")]
+        [Permission("Bedrijf.OnGetID")]
         public async Task<ActionResult<Bedrijf>> GetBedrijf(long id)
         {
             var bedrijf = await _context.Bedrijven.Include(o=> o.Opdrachten).Where(i => i.Id == id).FirstOrDefaultAsync();
@@ -47,6 +48,7 @@ namespace ApplicationChallenge.Controllers
 
         // PUT: api/Bedrijf/5
         [HttpPut("{id}")]
+        [Permission("Bedrijf.OnPutID")]
         public async Task<IActionResult> PutBedrijf(long id, Bedrijf bedrijf)
         {
             if (id != bedrijf.Id)

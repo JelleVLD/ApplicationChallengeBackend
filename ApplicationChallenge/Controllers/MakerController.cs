@@ -30,6 +30,7 @@ namespace ApplicationChallenge.Controllers
 
         // GET: api/Maker/5
         [HttpGet("{id}")]
+        [Permission("Maker.OnGetID")]
         public async Task<ActionResult<Maker>> GetMaker(long id)
         {
             var maker = await _context.Makers.FindAsync(id);
@@ -44,6 +45,7 @@ namespace ApplicationChallenge.Controllers
 
         // PUT: api/Maker/5
         [HttpPut("{id}")]
+        [Permission("Maker.OnPutID")]
         public async Task<IActionResult> PutMaker(long id, Maker maker)
         {
             if (id != maker.Id)
@@ -74,6 +76,7 @@ namespace ApplicationChallenge.Controllers
 
         // POST: api/Maker
         [HttpPost]
+        [Permission("Maker.OnCreate")]
         public async Task<ActionResult<Maker>> PostMaker(Maker maker)
         {
             _context.Makers.Add(maker);
@@ -84,6 +87,7 @@ namespace ApplicationChallenge.Controllers
 
         // DELETE: api/Maker/5
         [HttpDelete("{id}")]
+        [Permission("Maker.OnDeleteID")]
         public async Task<ActionResult<Maker>> DeleteMaker(long id)
         {
             var maker = await _context.Makers.FindAsync(id);

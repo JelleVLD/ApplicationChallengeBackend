@@ -180,21 +180,9 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Permissions.AddRange(
-                                new Permission { Title = "Bedrijf.OnGetID", UserTypeId = 3 },
-                                new Permission { Title = "Bedrijf.OnDeleteID", UserTypeId = 3 },
-                                new Permission { Title = "Opdracht.OnPutID", UserTypeId = 3 },
-                                new Permission { Title = "Opdracht.OnCreate", UserTypeId = 3 },
-                                new Permission { Title = "Opdracht.OnDeleteID", UserTypeId = 3 },
-                                new Permission { Title = "OpdrachtTag.OnGetBedrijfID", UserTypeId = 3 },
-                                new Permission { Title = "OpdrachtTag.OnGetBedrijfID", UserTypeId = 2 },
-                                new Permission { Title = "Tag.OnCreate", UserTypeId = 3 },
-                                new Permission { Title = "OpdrachtTag.OnDelete", UserTypeId = 3 },
-                                new Permission { Title = "OpdrachtTag.OnCreate", UserTypeId = 3 },
-                                new Permission { Title = "BedrijfTag.OnGetBedrijfID", UserTypeId = 3 },
-                                new Permission { Title = "BedrijfTag.OnDelete", UserTypeId = 3 },
-                                new Permission { Title = "BedrijfTag.OnCreate", UserTypeId = 3 },
+
+                                //Admin
                                 new Permission { Title = "Bedrijf.OnGet", UserTypeId = 1 },
-                                new Permission { Title = "OpdrachtMaker.OnGetId", UserTypeId = 3 },
                                 new Permission { Title = "BedrijfTag.OnGetBedrijfID", UserTypeId = 1 },
                                 new Permission { Title = "BedrijfTag.OnDelete", UserTypeId = 1 },
                                 new Permission { Title = "BedrijfTag.OnCreate", UserTypeId = 1 },
@@ -207,10 +195,35 @@ namespace ApplicationChallenge.Models
                                 new Permission { Title = "UserLogin.OnGetUserTypeId", UserTypeId = 1 },
                                 new Permission { Title = "Opdracht.OnGet", UserTypeId = 1 },
                                 new Permission { Title = "Opdracht.OnDeleteID", UserTypeId = 1 },
-                                new Permission { Title = "Opdracht.OnGet", UserTypeId = 2 },
-                                new Permission { Title = "Opdracht.OnGet", UserTypeId = 3 },
                                 new Permission { Title = "Bedrijf.OnDeleteID", UserTypeId = 1 },
-                                new Permission { Title = "Bedrijf.OnDeleteID", UserTypeId = 3 }
+                                new Permission { Title = "Maker.OnDeleteID", UserTypeId = 1 },
+
+                                //Bedrijf
+                                new Permission { Title = "Bedrijf.OnGetID", UserTypeId = 3 },
+                                new Permission { Title = "Bedrijf.OnDeleteID", UserTypeId = 3 },
+                                new Permission { Title = "Opdracht.OnPutID", UserTypeId = 3 },
+                                new Permission { Title = "Opdracht.OnCreate", UserTypeId = 3 },
+                                new Permission { Title = "Opdracht.OnDeleteID", UserTypeId = 3 },
+                                new Permission { Title = "OpdrachtTag.OnGetBedrijfID", UserTypeId = 3 }, 
+                                new Permission { Title = "Tag.OnCreate", UserTypeId = 3 },
+                                new Permission { Title = "OpdrachtTag.OnDelete", UserTypeId = 3 },
+                                new Permission { Title = "OpdrachtTag.OnCreate", UserTypeId = 3 },
+                                new Permission { Title = "BedrijfTag.OnGetBedrijfID", UserTypeId = 3 },
+                                new Permission { Title = "BedrijfTag.OnDelete", UserTypeId = 3 },
+                                new Permission { Title = "BedrijfTag.OnCreate", UserTypeId = 3 },
+                                new Permission { Title = "OpdrachtMaker.OnGetId", UserTypeId = 3 },
+                                new Permission { Title = "Opdracht.OnGet", UserTypeId = 3 },
+                                new Permission { Title = "Bedrijf.OnDeleteID", UserTypeId = 3 },
+                                new Permission { Title = "Bedrijf.OnGetID", UserTypeId = 3 },
+                                new Permission { Title = "Maker.OnGetID", UserTypeId = 3 },
+
+                                //Maker
+                                new Permission { Title = "OpdrachtTag.OnGetBedrijfID", UserTypeId = 2 },        
+                                new Permission { Title = "Opdracht.OnGet", UserTypeId = 2 },
+                                new Permission { Title = "Bedrijf.OnGetID", UserTypeId = 2 },
+                                new Permission { Title = "Maker.OnGetID", UserTypeId = 2 },
+                                new Permission { Title = "Maker.OnPutID", UserTypeId = 2 },
+                                new Permission { Title = "MakerTags.OnGetIDIncludeTag", UserTypeId = 2 }
                                 );
             }
             context.SaveChanges();
