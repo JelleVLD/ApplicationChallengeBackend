@@ -251,6 +251,24 @@ namespace ApplicationChallenge.Controllers
             await _context.SaveChangesAsync();
 
             return reviews;
+        }        
+        
+        // DELETE: api/Review/bedrijfid/5
+        [HttpDelete("bedrijfId/{bedrijfId}")]
+        public async Task<ActionResult<IEnumerable<Review>>> DeleteReviewWhereBedrijfId(int bedrijfId)
+        {
+            var reviews = await _context.Reviews.Where(m => m.BedrijfId == bedrijfId).ToListAsync();
+            if (reviews == null)
+            {
+                return NotFound();
+            }
+            foreach (var review in reviews)
+            {
+                _context.Reviews.Remove(review);
+            }
+            await _context.SaveChangesAsync();
+
+            return reviews;
         }
 
         private bool ReviewExists(long id)

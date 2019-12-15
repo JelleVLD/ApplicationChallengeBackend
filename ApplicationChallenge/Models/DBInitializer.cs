@@ -63,7 +63,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Makers.AddRange(
-                                new Maker { Nickname = "Student123", Voornaam = "Jelle", Achternaam = "Van Langendonck", LinkedInLink = "https://www.linkedin.com/in/jelle-van-langendonck/", Ervaring = "3 Jaar .NET Software Developer", GeboorteDatum = DateTime.Parse("13/11/1998"), Nr = "51", Straat = "Bochtstraat", Postcode = "2550", Stad = "Kontich", Biografie="Ik ben Jelle",Foto="jelle.jpg",CV="cv.pdf"}
+                                new Maker { Voornaam = "Jelle", Achternaam = "Van Langendonck", LinkedInLink = "https://www.linkedin.com/in/jelle-van-langendonck/", Ervaring = "3 Jaar .NET Software Developer", GeboorteDatum = DateTime.Parse("13/11/1998"), Nr = "51", Straat = "Bochtstraat", Postcode = "2550", Stad = "Kontich", Biografie="Ik ben Jelle",Foto="jelle.jpg"}
                                 );
             }
             context.SaveChanges();
@@ -205,7 +205,9 @@ namespace ApplicationChallenge.Models
                                 new Permission { Title = "Bedrijf.OnCreate", UserTypeId = 1 },
                                 new Permission { Title = "Review.OnGet", UserTypeId = 1 },
                                 new Permission { Title = "UserLogin.OnGetUserTypeId", UserTypeId = 1 },
-                                new Permission { Title = "Opdracht.OnGet", UserTypeId = 1 }
+                                new Permission { Title = "Opdracht.OnGet", UserTypeId = 1 },
+                                new Permission { Title = "Opdracht.OnDeleteID", UserTypeId = 1 },
+                                new Permission { Title = "Opdracht.OnGet", UserTypeId = 2 }
                                 );
             }
             context.SaveChanges();
