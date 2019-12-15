@@ -116,3 +116,7 @@ C:\3 ITF\Angular\BackEnd\ApplicationChallengeBackend\ApplicationChallenge\obj\De
 C:\3 ITF\Angular\BackEnd\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorTargetAssemblyInfo.cache
 C:\3 ITF\Angular\BackEnd\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.dll
 C:\3 ITF\Angular\BackEnd\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.pdb
+
+D:\School\3ITF\Angular\ApplicationChallenge\Backend\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorAssemblyInfo.cache
+D:\School\3ITF\Angular\ApplicationChallenge\Backend\ApplicationChallengeBackend\ApplicationChallenge\obj\Debug\netcoreapp2.2\ApplicationChallenge.RazorAssemblyInfo.cs
+
