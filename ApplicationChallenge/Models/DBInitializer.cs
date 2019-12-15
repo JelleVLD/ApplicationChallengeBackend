@@ -207,7 +207,8 @@ namespace ApplicationChallenge.Models
                                 new Permission { Title = "UserLogin.OnGetUserTypeId", UserTypeId = 1 },
                                 new Permission { Title = "Opdracht.OnGet", UserTypeId = 1 },
                                 new Permission { Title = "Opdracht.OnDeleteID", UserTypeId = 1 },
-                                new Permission { Title = "Opdracht.OnGet", UserTypeId = 2 }
+                                new Permission { Title = "Opdracht.OnGet", UserTypeId = 2 },
+                                new Permission { Title = "Opdracht.OnGet", UserTypeId = 3 }
                                 );
             }
             context.SaveChanges();
