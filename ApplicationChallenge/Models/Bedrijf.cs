@@ -19,6 +19,7 @@ namespace ApplicationChallenge.Models
         public string Foto { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Opdracht> Opdrachten { get; set; }
+        public ICollection<BedrijfTag> Tags { get; set; }
 
     }
 }

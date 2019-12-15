@@ -28,7 +28,7 @@ namespace ApplicationChallenge.Controllers
 
         public async Task<ActionResult<IEnumerable<Bedrijf>>> GetBedrijven()
         {
-            return await _context.Bedrijven.ToListAsync();
+            return await _context.Bedrijven.Include(x => x.Tags).ToListAsync();
         }
 
         // GET: api/Bedrijf/5

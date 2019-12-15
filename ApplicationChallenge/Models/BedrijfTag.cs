@@ -10,7 +10,7 @@ namespace ApplicationChallenge.Models
     {
         [Key]
         public long Id { get; set; }
-        public long? BedrijfId { get; set; }
+        public long BedrijfId { get; set; }
         public long TagId { get; set; }
         public Bedrijf Bedrijf { get; set; }
         public Tag Tag { get; set; }

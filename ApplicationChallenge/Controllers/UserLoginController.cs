@@ -48,7 +48,12 @@ namespace ApplicationChallenge.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserLogin>>> GetUserLogins()
         {
-            return await _context.UserLogins.Include(m => m.Maker).Include(b => b.Bedrijf).Include(a => a.Admin).ToListAsync();
+            var userLogins = await _context.UserLogins.Include(m => m.Maker).Include(b => b.Bedrijf).Include(a => a.Admin).ToListAsync();
+            foreach (UserLogin userLogin in userLogins)
+            {
+                userLogin.Password = null;
+            }
+            return userLogins;
         }
 
         // GET: api/UserLogin/{userTypeId}
@@ -56,7 +61,12 @@ namespace ApplicationChallenge.Controllers
         [Permission("UserLogin.OnGetUserTypeId")]
         public async Task<ActionResult<IEnumerable<UserLogin>>> GetUserLoginsWhereUserTypeId(int userTypeId)
         {
-            return await _context.UserLogins.Include(m => m.Maker).ThenInclude(y => y.Interesses).Include(b => b.Bedrijf).Include(a => a.Admin).Where(u => u.UserTypeId == userTypeId).ToListAsync();
+            var userLogins = await _context.UserLogins.Include(m => m.Maker).ThenInclude(y => y.Interesses).Include(b => b.Bedrijf).ThenInclude(x => x.Tags).Include(a => a.Admin).Where(u => u.UserTypeId == userTypeId).ToListAsync();
+            foreach (UserLogin userLogin in userLogins)
+            {
+                userLogin.Password = null;
+            }
+            return userLogins;
         }
 
         // GET: api/UserLogin/5
@@ -431,6 +441,98 @@ namespace ApplicationChallenge.Controllers
             {
                 userLogin.Password = userLoginOld.Password;
             } else
+            {
+                userLogin.Password = HashPassword(userLogin.Password);
+            }
+
+            _context.Entry(userLoginOld).State = EntityState.Detached;
+
+            _context.Entry(userLogin).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+
+            return CreatedAtAction("GetUserLogin", new { id = userLogin.Id }, userLogin);
+        }
+
+        // POST: api/UserLogin
+        [HttpPut("EditLoginBedrijf/{id}")]
+        public async Task<ActionResult<UserLogin>> EditLoginBedrijf(long id, BedrijfWithLoginTags data)
+        {
+            UserLogin userLogin = data.userlogin;
+            Bedrijf bedrijf = data.bedrijf;
+            string[] tags = data.tags;
+
+            userLogin.UserTypeId = 3;
+
+            var userLoginOld = _context.UserLogins.Find(id);
+            var bedrijfOld = _context.Bedrijven.Find(userLoginOld.BedrijfId);
+
+            if (userLoginOld == null)
+            {
+                return NotFound();
+            }
+
+            if (_context.UserLogins.Where(x => (x.Email == userLogin.Email) && (x.Id != id)).SingleOrDefault() != null)
+            {
+                return Ok("Email");
+            }
+
+            if (_context.UserLogins.Where(x => x.Username == userLogin.Username && (x.Id != id)).SingleOrDefault() != null)
+            {
+                return Ok("Username");
+            }
+
+            bedrijf.Id = bedrijfOld.Id;
+
+            _context.Entry(bedrijfOld).State = EntityState.Detached;
+
+            _context.Entry(bedrijf).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            var bedrijfTagsOld = await _context.BedrijfTags.Where(x => x.BedrijfId == bedrijf.Id).ToListAsync();
+
+            if (bedrijfTagsOld != null)
+            {
+                foreach (BedrijfTag bedrijfTag in bedrijfTagsOld)
+                {
+                    _context.Remove(bedrijfTag);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            if (tags != null)
+            {
+                foreach (string tag in tags)
+                {
+                    Tag tagObject = await _context.Tags.Where(x => x.Naam.ToLower() == tag.ToLower()).SingleOrDefaultAsync();
+                    if (tagObject == null)
+                    {
+                        tagObject = new Tag();
+                        tagObject.Naam = tag;
+
+                        _context.Tags.Add(tagObject);
+                    }
+
+                    var bedrijfTag = await _context.BedrijfTags.Where(x => (x.TagId == tagObject.Id) && (x.BedrijfId == bedrijf.Id)).SingleOrDefaultAsync();
+                    if (bedrijfTag == null)
+                    {
+                        BedrijfTag bedrijftag = new BedrijfTag();
+                        bedrijftag.BedrijfId = bedrijf.Id;
+                        bedrijftag.TagId = tagObject.Id;
+                        _context.BedrijfTags.Add(bedrijftag);
+                    }
+                }
+            }
+
+            userLogin.BedrijfId = bedrijf.Id;
+
+            if (userLogin.Password == null)
+            {
+                userLogin.Password = userLoginOld.Password;
+            }
+            else
             {
                 userLogin.Password = HashPassword(userLogin.Password);
             }
