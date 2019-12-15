@@ -25,6 +25,7 @@ namespace ApplicationChallenge.Controllers
 
         // GET: api/Opdracht
         [HttpGet]
+        [Permission("Opdracht.OnGet")]
         public async Task<ActionResult<IEnumerable<Opdracht>>> GetOpdrachten()
 
         {
@@ -82,6 +83,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         //GET: api/Opdracht
+        [Permission("Opdracht.OnGet")]
         [HttpGet("searchOpen/{title}")]
         public async Task<ActionResult<IEnumerable<Opdracht>>> GetOpdrachtenByTitleAndTagsOnlyOpen(string title)
 
@@ -157,6 +159,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         //GET: api/Opdracht
+        [Permission("Opdracht.OnGet")]
         [HttpGet("search/{title}")]
         public async Task<ActionResult<IEnumerable<Opdracht>>> GetOpdrachtenByTitleAndTags(string title)
 
@@ -231,6 +234,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // GET: api/Opdracht/5
+        [Permission("Opdracht.OnGet")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Opdracht>> GetOpdracht(long id)
         {
@@ -246,7 +250,8 @@ namespace ApplicationChallenge.Controllers
         }
 
         // PUT: api/Opdracht/5
-        [HttpPut("{id}")] [Permission("Opdracht.OnPutID")]
+        [Permission("Opdracht.OnPutID")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutOpdracht(long id, Opdracht opdracht)
         {
             if (id != opdracht.Id)
