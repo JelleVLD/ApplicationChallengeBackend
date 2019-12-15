@@ -76,7 +76,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // POST: api/Bedrijf
-        [HttpPost]
+        [HttpPost] [Permission("Bedrijf.OnCreate")]
         public async Task<ActionResult<Bedrijf>> PostBedrijf(Bedrijf bedrijf)
         {
             _context.Bedrijven.Add(bedrijf);

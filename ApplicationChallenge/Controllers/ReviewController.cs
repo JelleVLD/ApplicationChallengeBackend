@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
+using ApplicationChallenge.Attributes;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -22,6 +23,7 @@ namespace ApplicationChallenge.Controllers
 
         // GET: api/Review
         [HttpGet]
+        [Permission("Review.OnGet")]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
         {
             return await _context.Reviews.Include(m => m.Maker).Include(b => b.Bedrijf).ToListAsync();

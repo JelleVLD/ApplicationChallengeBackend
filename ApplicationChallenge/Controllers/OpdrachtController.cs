@@ -52,6 +52,7 @@ namespace ApplicationChallenge.Controllers
 
         // GET: api/Opdracht
         [HttpGet("open")]
+        [Permission("Opdracht.OnGet")]
         public async Task<ActionResult<IEnumerable<Opdracht>>> GetOpdrachtenOpen()
         {
             var opdrachten = await _context.Opdrachten.Include(o => o.Bedrijf).Include(x => x.Tags).ThenInclude(y => y.Tag).Where(o => o.open == true).ToListAsync();
