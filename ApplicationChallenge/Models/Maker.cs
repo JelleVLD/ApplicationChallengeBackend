@@ -21,7 +21,6 @@ namespace ApplicationChallenge.Models
         public string Biografie { get; set; }
         public string LinkedInLink { get; set; }
         public string Ervaring { get; set; }
-        public string CV { get; set; }
         public string Foto { get; set; }
 
         public ICollection<Review> Reviews { get; set; }

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
 using ApplicationChallenge.Attributes;
+using System.Net.Mail;
+using System.Net;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -23,6 +25,7 @@ namespace ApplicationChallenge.Controllers
 
         // GET: api/Opdracht
         [HttpGet]
+        [Permission("Opdracht.OnGet")]
         public async Task<ActionResult<IEnumerable<Opdracht>>> GetOpdrachten()
 
         {
@@ -80,6 +83,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         //GET: api/Opdracht
+        [Permission("Opdracht.OnGet")]
         [HttpGet("searchOpen/{title}")]
         public async Task<ActionResult<IEnumerable<Opdracht>>> GetOpdrachtenByTitleAndTagsOnlyOpen(string title)
 
@@ -155,6 +159,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         //GET: api/Opdracht
+        [Permission("Opdracht.OnGet")]
         [HttpGet("search/{title}")]
         public async Task<ActionResult<IEnumerable<Opdracht>>> GetOpdrachtenByTitleAndTags(string title)
 
@@ -229,6 +234,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         // GET: api/Opdracht/5
+        [Permission("Opdracht.OnGet")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Opdracht>> GetOpdracht(long id)
         {
@@ -244,7 +250,8 @@ namespace ApplicationChallenge.Controllers
         }
 
         // PUT: api/Opdracht/5
-        [HttpPut("{id}")] [Permission("Opdracht.OnPutID")]
+        [Permission("Opdracht.OnPutID")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutOpdracht(long id, Opdracht opdracht)
         {
             if (id != opdracht.Id)
@@ -272,7 +279,63 @@ namespace ApplicationChallenge.Controllers
 
             return NoContent();
         }
+        // PUT: api/Opdracht/5
+        [HttpPut("sluitopdracht/{id}")]
+        [Permission("Opdracht.OnPutID")]
+        public async Task<IActionResult> SluitOpdracht(long id,OpdrachtMaker opdrachtmaker)
+        {
+            var opdracht = await _context.Opdrachten.FindAsync(opdrachtmaker.OpdrachtId);
+            var userLogin = await _context.UserLogins.FindAsync(opdrachtmaker.MakerId);
+            if (id != opdracht.Id)
+            {
+                return BadRequest();
+            }
+            opdracht.klaar = true;
+            _context.Entry(opdracht).State = EntityState.Modified;
+            MailAddress to = new MailAddress(userLogin.Email);
+            MailAddress from = new MailAddress("donotreply@centtask.be");
 
+            MailMessage message = new MailMessage(from, to);
+            message.Subject = "Betreffende " +opdracht.Titel;
+            message.Body = "" +
+                "<h1>Gefeliciteerd!</h1>" +
+                "<p>U heeft de opdracht: " + opdracht.Titel + " gewonnen!</p>" +
+                "<p>Met vriendelijke groeten, het Centtask team;</p>";
+
+            message.IsBodyHtml = true;
+
+            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            {
+                Credentials = new NetworkCredential("9533f03187ee7c", "3058369c7f2f3b"),
+                EnableSsl = true
+            };
+
+            try
+            {
+                client.Send(message);
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OpdrachtExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
         // POST: api/Opdracht
         [HttpPost]
         [Permission("Opdracht.OnCreate")]

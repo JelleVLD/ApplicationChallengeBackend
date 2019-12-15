@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApplicationChallenge.Models;
 using ApplicationChallenge.Attributes;
+using System.Net.Mail;
+using System.Net;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -64,9 +66,37 @@ namespace ApplicationChallenge.Controllers
             {
                 return BadRequest();
             }
+            var newOpdrachtMaker = await _context.OpdrachtMakers.Include(o => o.Opdracht).Where(o => o.Id == opdrachtMaker.Id).FirstAsync();
 
-            _context.Entry(opdrachtMaker).State = EntityState.Modified;
+            var userLogin = await _context.UserLogins.Where(u => u.MakerId == opdrachtMaker.MakerId).FirstAsync();
+            MailAddress to = new MailAddress(userLogin.Email);
+            MailAddress from = new MailAddress("donotreply@centtask.be");
 
+            MailMessage message = new MailMessage(from, to);
+            message.Subject = "Betreffende " + newOpdrachtMaker.Opdracht.Titel;
+            message.Body = "" +
+                "<h1>Gefeliciteerd!</h1>" +
+                "<p>U bent  geselecteerd voor de opdracht: " + newOpdrachtMaker.Opdracht.Titel + ", en kan er nu aan beginnen!</p>" +
+                "<p>Met vriendelijke groeten, het Centtask team;</p>";
+
+            message.IsBodyHtml = true;
+
+            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            {
+                Credentials = new NetworkCredential("9533f03187ee7c", "3058369c7f2f3b"),
+                EnableSsl = true
+            };
+
+            try
+            {
+                client.Send(message);
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            newOpdrachtMaker.Geaccepteerd = true;
+            _context.Entry(newOpdrachtMaker).State = EntityState.Modified;
             try
             {
                 await _context.SaveChangesAsync();
@@ -128,14 +158,41 @@ namespace ApplicationChallenge.Controllers
 
         // DELETE: api/OpdrachtMaker/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<OpdrachtMaker>> DeleteOpdrachtMaker(long id)
-        {
-            var opdrachtMaker = await _context.OpdrachtMakers.FindAsync(id);
+        public async Task<ActionResult<OpdrachtMaker>> DeleteOpdrachtMaker(long id) {
+
+
+            var opdrachtMaker = await _context.OpdrachtMakers.Include(m => m.Maker).Include(o=>o.Opdracht).Where(i => i.Id == id).FirstOrDefaultAsync();
             if (opdrachtMaker == null)
             {
                 return NotFound();
             }
+            var userLogin = await _context.UserLogins.Where(u => u.MakerId == opdrachtMaker.MakerId).FirstAsync();
+            MailAddress to = new MailAddress(userLogin.Email);
+            MailAddress from = new MailAddress("donotreply@centtask.be");
 
+            MailMessage message = new MailMessage(from, to);
+            message.Subject = "Betreffende " + opdrachtMaker.Opdracht.Titel;
+            message.Body = "" +
+                "<h1>Onze excuses!</h1>" +
+                "<p>U bent jammergenoeg niet geselecteerd voor de opdracht: " + opdrachtMaker.Opdracht.Titel + "</p>" +
+                "<p>Met vriendelijke groeten, het Centtask team;</p>";
+
+            message.IsBodyHtml = true;
+
+            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            {
+                Credentials = new NetworkCredential("9533f03187ee7c", "3058369c7f2f3b"),
+                EnableSsl = true
+            };
+
+            try
+            {
+                client.Send(message);
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             _context.OpdrachtMakers.Remove(opdrachtMaker);
             await _context.SaveChangesAsync();
 
