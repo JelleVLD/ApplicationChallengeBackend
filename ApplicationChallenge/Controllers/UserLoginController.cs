@@ -56,7 +56,7 @@ namespace ApplicationChallenge.Controllers
         [Permission("UserLogin.OnGetUserTypeId")]
         public async Task<ActionResult<IEnumerable<UserLogin>>> GetUserLoginsWhereUserTypeId(int userTypeId)
         {
-            return await _context.UserLogins.Include(m => m.Maker).Include(b => b.Bedrijf).Include(a => a.Admin).Where(u => u.UserTypeId == userTypeId).ToListAsync();
+            return await _context.UserLogins.Include(m => m.Maker).ThenInclude(y => y.Interesses).Include(b => b.Bedrijf).Include(a => a.Admin).Where(u => u.UserTypeId == userTypeId).ToListAsync();
         }
 
         // GET: api/UserLogin/5
@@ -269,7 +269,6 @@ namespace ApplicationChallenge.Controllers
             string[] tags = data.tags;
 
             userLogin.UserTypeId = 2;
-            userLogin.Verified = false;
 
             if (_context.UserLogins.Where(x => x.Email == userLogin.Email).SingleOrDefault() != null)
             {
@@ -312,32 +311,135 @@ namespace ApplicationChallenge.Controllers
             _context.UserLogins.Add(userLogin);
             await _context.SaveChangesAsync();
 
-            MailAddress to = new MailAddress(userLogin.Email);
-            MailAddress from = new MailAddress("donotreply@centtask.be");
-
-            MailMessage message = new MailMessage(from, to);
-            message.Subject = "Bevestig je account bij Centask";
-            message.Body = "" +
-                "<h1>Welkom bij Centask!</h1>" +
-                "<p>Gelieve je account te bevestigen: " +
-                "<a href='" + "http://localhost:4200/verifyUser?userLoginId=" + userLogin.Id + "'>Klik hier om te bevestigen</a>";
-
-            message.IsBodyHtml = true;
-
-            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            if (userLogin.Verified == false)
             {
-                Credentials = new NetworkCredential("9533f03187ee7c", "3058369c7f2f3b"),
-                EnableSsl = true
-            };
 
-            try
-            {
-                client.Send(message);
+                MailAddress to = new MailAddress(userLogin.Email);
+                MailAddress from = new MailAddress("donotreply@centtask.be");
+
+                MailMessage message = new MailMessage(from, to);
+                message.Subject = "Bevestig je account bij Centask";
+                message.Body = "" +
+                    "<h1>Welkom bij Centask!</h1>" +
+                    "<p>Gelieve je account te bevestigen: " +
+                    "<a href='" + "http://localhost:4200/verifyUser?userLoginId=" + userLogin.Id + "'>Klik hier om te bevestigen</a>";
+
+                message.IsBodyHtml = true;
+
+                var client = new SmtpClient("smtp.mailtrap.io", 2525)
+                {
+                    Credentials = new NetworkCredential("9533f03187ee7c", "3058369c7f2f3b"),
+                    EnableSsl = true
+                };
+
+                try
+                {
+                    client.Send(message);
+                }
+                catch (SmtpException ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
-            catch (SmtpException ex)
+
+            return CreatedAtAction("GetUserLogin", new { id = userLogin.Id }, userLogin);
+        }
+
+        // POST: api/UserLogin
+        [HttpPut("EditLoginMaker/{id}")]
+        public async Task<ActionResult<UserLogin>> EditLoginMaker(long id, MakerWithLogin data)
+        {
+            UserLogin userLogin = data.userlogin;
+            Maker maker = data.maker;
+            string[] tags = data.tags;
+
+            userLogin.UserTypeId = 2;
+
+            var userLoginOld = _context.UserLogins.Find(id);
+            var makerOld = _context.Makers.Find(userLoginOld.MakerId);
+
+            if (userLoginOld == null)
             {
-                Console.WriteLine(ex.ToString());
+                return NotFound();
             }
+
+            if (_context.UserLogins.Where(x => (x.Email == userLogin.Email) && (x.Id != id)).SingleOrDefault() != null)
+            {
+                return Ok("Email");
+            }
+
+            if (_context.UserLogins.Where(x => x.Username == userLogin.Username && (x.Id != id)).SingleOrDefault() != null)
+            {
+                return Ok("Username");
+            }
+
+            maker.Id = makerOld.Id;
+
+            _context.Entry(makerOld).State = EntityState.Detached;
+
+            _context.Entry(maker).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            var makerTagsOld = await _context.MakerTags.Where(x => x.MakerId == maker.Id).ToListAsync();
+
+            if (makerTagsOld != null)
+            {
+                foreach (MakerTag makerTag in makerTagsOld)
+                {
+                    _context.Entry(makerTag).State = EntityState.Detached;
+                    makerTag.SelfSet = false;
+                    _context.Entry(makerTag).State = EntityState.Modified;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            if (tags != null)
+            {
+                foreach (string tag in tags)
+                {
+                    Tag tagObject = await _context.Tags.Where(x => x.Naam.ToLower() == tag.ToLower()).SingleOrDefaultAsync();
+                    if (tagObject == null)
+                    {
+                        tagObject = new Tag();
+                        tagObject.Naam = tag;
+
+                        _context.Tags.Add(tagObject);
+                    }
+
+                    var makerTag = await _context.MakerTags.Where(x => (x.TagId == tagObject.Id) && (x.MakerId == maker.Id)).SingleOrDefaultAsync();
+                    if (makerTag == null) {
+                        MakerTag makertag = new MakerTag();
+                        makertag.MakerId = maker.Id;
+                        makertag.Interest = 1;
+                        makertag.TagId = tagObject.Id;
+                        makertag.SelfSet = true;
+                        _context.MakerTags.Add(makertag);
+                    } else
+                    {
+                        _context.Entry(makerTag).State = EntityState.Detached;
+                        makerTag.SelfSet = true;
+                        _context.Entry(makerTag).State = EntityState.Modified;
+                    }
+                }
+            }
+
+            userLogin.MakerId = maker.Id;
+
+            if (userLogin.Password == null)
+            {
+                userLogin.Password = userLoginOld.Password;
+            } else
+            {
+                userLogin.Password = HashPassword(userLogin.Password);
+            }
+
+            _context.Entry(userLoginOld).State = EntityState.Detached;
+
+            _context.Entry(userLogin).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
 
             return CreatedAtAction("GetUserLogin", new { id = userLogin.Id }, userLogin);
         }
@@ -350,7 +452,6 @@ namespace ApplicationChallenge.Controllers
             Bedrijf bedrijf = data.bedrijf;
 
             userLogin.UserTypeId = 3;
-            userLogin.Verified = false;
 
             if (_context.UserLogins.Where(x => x.Email == userLogin.Email).SingleOrDefault() != null)
             {
@@ -376,31 +477,34 @@ namespace ApplicationChallenge.Controllers
             _context.UserLogins.Add(userLogin);
             await _context.SaveChangesAsync();
 
-            MailAddress to = new MailAddress(userLogin.Email);
-            MailAddress from = new MailAddress("donotreply@centtask.be");
-
-            MailMessage message = new MailMessage(from, to);
-            message.Subject = "Bevestig je account bij Centask";
-            message.Body = "" +
-                "<h1>Welkom bij Centask!</h1>" +
-                "<p>Gelieve je account te bevestigen: " +
-                "<a href='" + "http://localhost:4200/verifyUser?userLoginId=" + userLogin.Id + "'>Klik hier om te bevestigen</a>";
-
-            message.IsBodyHtml = true;
-
-            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            if (userLogin.Verified == false)
             {
-                Credentials = new NetworkCredential("9533f03187ee7c", "3058369c7f2f3b"),
-                EnableSsl = true
-            };
+                MailAddress to = new MailAddress(userLogin.Email);
+                MailAddress from = new MailAddress("donotreply@centtask.be");
 
-            try
-            {
-                client.Send(message);
-            }
-            catch (SmtpException ex)
-            {
-                Console.WriteLine(ex.ToString());
+                MailMessage message = new MailMessage(from, to);
+                message.Subject = "Bevestig je account bij Centask";
+                message.Body = "" +
+                    "<h1>Welkom bij Centask!</h1>" +
+                    "<p>Gelieve je account te bevestigen: " +
+                    "<a href='" + "http://localhost:4200/verifyUser?userLoginId=" + userLogin.Id + "'>Klik hier om te bevestigen</a>";
+
+                message.IsBodyHtml = true;
+
+                var client = new SmtpClient("smtp.mailtrap.io", 2525)
+                {
+                    Credentials = new NetworkCredential("9533f03187ee7c", "3058369c7f2f3b"),
+                    EnableSsl = true
+                };
+
+                try
+                {
+                    client.Send(message);
+                }
+                catch (SmtpException ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
 
             return CreatedAtAction("GetUserLogin", new { id = userLogin.Id }, userLogin);
