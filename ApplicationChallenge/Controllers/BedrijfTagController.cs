@@ -94,7 +94,6 @@ namespace ApplicationChallenge.Controllers
             foreach (var bedrijfTag in bedrijfTags)
             {
                 _context.BedrijfTags.Remove(bedrijfTag);
-                _context.Tags.Remove(bedrijfTag.Tag);
 
             }
             await _context.SaveChangesAsync();

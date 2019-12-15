@@ -13050,39 +13050,23 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
-    "C:\\Users\\agitb\\.nuget\\packages\\": {},
-=======
     "C:\\Users\\Eigenaar\\.nuget\\packages\\": {},
->>>>>>> rebasecommit
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "D:\\school\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj",
-      "projectName": "ApplicationChallenge",
-      "projectPath": "D:\\school\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj",
-      "packagesPath": "C:\\Users\\agitb\\.nuget\\packages\\",
-      "outputPath": "D:\\school\\ApplicationChallengeBackend\\ApplicationChallenge\\obj\\",
-=======
       "projectUniqueName": "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj",
       "projectName": "ApplicationChallenge",
       "projectPath": "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj",
       "packagesPath": "C:\\Users\\Eigenaar\\.nuget\\packages\\",
       "outputPath": "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallengeBackend\\ApplicationChallenge\\obj\\",
->>>>>>> rebasecommit
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-<<<<<<< HEAD
-        "C:\\Users\\agitb\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
         "C:\\Users\\Eigenaar\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> rebasecommit
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
