@@ -40,7 +40,7 @@ namespace ApplicationChallenge.Controllers
                 if (makertag.SelfSet == false)
                 {
                     _context.Entry(makertag).State = EntityState.Modified;
-                    makertag.Interest = (makertag.Interest - (makertag.Interest / 10 * 3));
+                    makertag.Interest = (makertag.Interest - (makertag.Interest / 10 * 1));
                     _context.SaveChanges();
                 }
             }

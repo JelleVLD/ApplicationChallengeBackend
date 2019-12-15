@@ -154,23 +154,6 @@ namespace ApplicationChallenge.Controllers
 
                 await _context.SaveChangesAsync();
 
-                //try
-                //{
-
-                //    await _context.SaveChangesAsync();
-                //}
-                //catch (DbUpdateConcurrencyException)
-                //{
-                //    if (!UserLoginExists(id))
-                //    {
-                //        return NotFound();
-                //    }
-                //    else
-                //    {
-                //        throw;
-                //    }
-                //}
-
                 return Ok(userLogin);
 
             }
@@ -300,7 +283,7 @@ namespace ApplicationChallenge.Controllers
             {
                 foreach(string tag in tags)
                 {
-                    Tag tagObject = await _context.Tags.Where(x => x.Naam == tag).SingleOrDefaultAsync();
+                    Tag tagObject = await _context.Tags.Where(x => x.Naam.ToLower() == tag.ToLower()).SingleOrDefaultAsync();
                     if (tagObject == null)
                     {
                         tagObject = new Tag();
@@ -332,7 +315,7 @@ namespace ApplicationChallenge.Controllers
             message.Body = "" +
                 "<h1>Welkom bij Centask!</h1>" +
                 "<p>Gelieve je account te bevestigen: " +
-                "<a href='url'>http://localhost:4200/verifyUser?userLoginId=" + userLogin.Id + "</a>";
+                "<a href='" + "http://localhost:4200/verifyUser?userLoginId=" + userLogin.Id + "'>Klik hier om te bevestigen</a>";
 
             message.IsBodyHtml = true;
 
@@ -396,7 +379,7 @@ namespace ApplicationChallenge.Controllers
             message.Body = "" +
                 "<h1>Welkom bij Centask!</h1>" +
                 "<p>Gelieve je account te bevestigen: " +
-                "<a href='url'>http://localhost:4200/verifyUser?userLoginId=" + userLogin.Id + "</a>";
+                "<a href='" + "http://localhost:4200/verifyUser?userLoginId=" + userLogin.Id + "'>Klik hier om te bevestigen</a>";
 
             message.IsBodyHtml = true;
 

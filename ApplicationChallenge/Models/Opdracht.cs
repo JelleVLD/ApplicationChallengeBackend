@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,7 +22,12 @@ namespace ApplicationChallenge.Models
         public bool klaar { get; set; }
         public ICollection<Maker> Makers { get; set; }
         public ICollection<OpdrachtMaker> OpdrachtMakers { get; set; }
+        public ICollection<OpdrachtTag> Tags { get; set; }
         public Bedrijf Bedrijf { get; set; }
+
+        [NotMapped]
+        public double Interest { get; set; }
+        
 
     }
 }

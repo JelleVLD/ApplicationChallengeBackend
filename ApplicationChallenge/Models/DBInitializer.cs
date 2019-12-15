@@ -74,8 +74,13 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Opdrachten.AddRange(
-                                new Opdracht {BedrijfId=1,Titel="Application Challenge",Omschrijving="Dit is een Challenge voor de studenten van Thomas More.",Postcode="2440",WoonPlaats="Geel",Straat="KleinhoefStraat",StraatNr="4",open=true,klaar=false }
-                                );
+                                new Opdracht { BedrijfId = 1, Titel = "Application Challenge", Omschrijving = "Dit is een Challenge voor de studenten van Thomas More.", Postcode = "2440", WoonPlaats = "Geel", Straat = "KleinhoefStraat", StraatNr = "4", open = true, klaar = false },
+                                new Opdracht { BedrijfId = 1, Titel = "Hackathon 2020", Omschrijving = "Dit is een Challenge voor de studenten van Thomas More.", Postcode = "2440", WoonPlaats = "Geel", Straat = "KleinhoefStraat", StraatNr = "4", open = true, klaar = false },
+                                new Opdracht { BedrijfId = 1, Titel = ".NET Competitie", Omschrijving = "Dit is een Challenge voor de studenten van Thomas More.", Postcode = "2440", WoonPlaats = "Geel", Straat = "KleinhoefStraat", StraatNr = "4", open = true, klaar = false },
+                                new Opdracht { BedrijfId = 1, Titel = "SOS Javascript", Omschrijving = "Dit is een Challenge voor de studenten van Thomas More.", Postcode = "2440", WoonPlaats = "Geel", Straat = "KleinhoefStraat", StraatNr = "4", open = true, klaar = false },
+                                new Opdracht { BedrijfId = 1, Titel = "Interne Opdracht", Omschrijving = "Dit is een Challenge voor de studenten van Thomas More.", Postcode = "2440", WoonPlaats = "Geel", Straat = "KleinhoefStraat", StraatNr = "4", open = true, klaar = false }
+
+                                ) ;
             }
             if (context.Tags.Any())
             {
@@ -89,7 +94,6 @@ namespace ApplicationChallenge.Models
                                 new Tag { Naam = "Hackathon" },
                                 new Tag { Naam = "Angular" },
                                 new Tag { Naam = "React" },
-                                new Tag { Naam = ".NET" },
                                 new Tag { Naam = "ASP.NET" },
                                 new Tag { Naam = "HTML" },
                                 new Tag { Naam = "CSS" },
@@ -137,7 +141,7 @@ namespace ApplicationChallenge.Models
             {
                 context.Reviews.AddRange(
                                 new Review { MakerId = 1, ReviewTekst = "Goede Samenwerking, Vlotte ondersteuning", NaarBedrijf = true, BedrijfId = 1,Score=4 },
-                                new Review { MakerId = 1, ReviewTekst = "Minimalistisch Design, Tijdige Upload", NaarBedrijf = false, BedrijfId = 1, Score =5 }
+                                new Review { MakerId = 1, ReviewTekst = "Minimalistisch Design, Tijdige upload", NaarBedrijf = false, BedrijfId = 1, Score =5 }
                                 ) ;
             }
             if (context.OpdrachtTags.Any())
@@ -147,7 +151,14 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.OpdrachtTags.AddRange(
-                                new OpdrachtTag { OpdrachtId=1,TagId=1}
+                                new OpdrachtTag { OpdrachtId=1,TagId=6},
+                                new OpdrachtTag { OpdrachtId=1,TagId=14},
+                                new OpdrachtTag { OpdrachtId=1,TagId=17},
+                                new OpdrachtTag { OpdrachtId=2,TagId=15},
+                                new OpdrachtTag { OpdrachtId=2,TagId=18},
+                                new OpdrachtTag { OpdrachtId=3,TagId=17},
+                                new OpdrachtTag { OpdrachtId=4,TagId=16},
+                                new OpdrachtTag { OpdrachtId=4,TagId=13}
                                 );
             }
             context.SaveChanges();

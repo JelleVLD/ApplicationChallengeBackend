@@ -14,6 +14,6 @@ namespace ApplicationChallenge.Models
         public long TagId { get; set; }
         public Tag Tag { get; set; }
         public bool SelfSet { get; set; }
-        public float Interest { get; set; }
+        public double Interest { get; set; }
     }
 }
