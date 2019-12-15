@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\school\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj": {}
+    "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj": {}
   },
   "projects": {
-    "D:\\school\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj": {
+    "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\school\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj",
+        "projectUniqueName": "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj",
         "projectName": "ApplicationChallenge",
-        "projectPath": "D:\\school\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj",
-        "packagesPath": "C:\\Users\\agitb\\.nuget\\packages\\",
-        "outputPath": "D:\\school\\ApplicationChallengeBackend\\ApplicationChallenge\\obj\\",
+        "projectPath": "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallengeBackend\\ApplicationChallenge\\ApplicationChallenge.csproj",
+        "packagesPath": "C:\\Users\\Eigenaar\\.nuget\\packages\\",
+        "outputPath": "C:\\3 ITF\\Angular\\BackEnd\\ApplicationChallengeBackend\\ApplicationChallenge\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\agitb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Eigenaar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
