@@ -10,7 +10,6 @@ namespace ApplicationChallenge.Models
     {
         [Key]
         public long Id { get; set; }
-        public string Nickname { get; set; }
         public string Voornaam { get; set; }
         public string Achternaam { get; set; }
         public string Straat { get; set; }

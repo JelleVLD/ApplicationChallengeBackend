@@ -63,7 +63,7 @@ namespace ApplicationChallenge.Models
             else
             {
                 context.Makers.AddRange(
-                                new Maker { Nickname = "Student123", Voornaam = "Jelle", Achternaam = "Van Langendonck", LinkedInLink = "https://www.linkedin.com/in/jelle-van-langendonck/", Ervaring = "3 Jaar .NET Software Developer", GeboorteDatum = DateTime.Parse("13/11/1998"), Nr = "51", Straat = "Bochtstraat", Postcode = "2550", Stad = "Kontich", Biografie="Ik ben Jelle",Foto="jelle.jpg"}
+                                new Maker { Voornaam = "Jelle", Achternaam = "Van Langendonck", LinkedInLink = "https://www.linkedin.com/in/jelle-van-langendonck/", Ervaring = "3 Jaar .NET Software Developer", GeboorteDatum = DateTime.Parse("13/11/1998"), Nr = "51", Straat = "Bochtstraat", Postcode = "2550", Stad = "Kontich", Biografie="Ik ben Jelle",Foto="jelle.jpg"}
                                 );
             }
             context.SaveChanges();
