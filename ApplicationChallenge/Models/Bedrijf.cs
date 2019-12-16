@@ -17,6 +17,7 @@ namespace ApplicationChallenge.Models
         public string Postcode { get; set; }
         public string Biografie { get; set; }
         public string Foto { get; set; }
+        public UserLogin UserLogin { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Opdracht> Opdrachten { get; set; }
         public ICollection<BedrijfTag> Tags { get; set; }

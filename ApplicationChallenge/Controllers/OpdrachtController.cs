@@ -9,6 +9,7 @@ using ApplicationChallenge.Models;
 using ApplicationChallenge.Attributes;
 using System.Net.Mail;
 using System.Net;
+using ApplicationChallenge.Models.Dto;
 
 namespace ApplicationChallenge.Controllers
 {
@@ -51,6 +52,73 @@ namespace ApplicationChallenge.Controllers
             }
 
             return opdrachten;
+        }
+
+        // POST: api/UserLogin
+        [HttpPut("EditOpdracht/{id}")]
+        public async Task<ActionResult<Opdracht>> EditOpdracht(long id, OpdrachtTags data)
+        {
+            Opdracht opdracht = data.opdracht;
+            string[] tags = data.tags;
+
+            var opdrachtOld = _context.Opdrachten.Find(opdracht.Id);
+
+            if (opdrachtOld == null)
+            {
+                return NotFound();
+            }
+
+            opdracht.Id = opdrachtOld.Id;
+            opdracht.BedrijfId = opdrachtOld.BedrijfId;
+            opdracht.klaar = opdrachtOld.klaar;
+            opdracht.open = opdrachtOld.open;
+
+            _context.Entry(opdrachtOld).State = EntityState.Detached;
+
+            _context.Entry(opdracht).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            var opdrachtTagsOld = await _context.OpdrachtTags.Where(x => x.OpdrachtId == opdracht.Id).ToListAsync();
+
+            if (opdrachtTagsOld != null)
+            {
+                foreach (OpdrachtTag opdrachtTag in opdrachtTagsOld)
+                {
+                    _context.Remove(opdrachtTag);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            if (tags != null)
+            {
+                foreach (string tag in tags)
+                {
+                    Tag tagObject = await _context.Tags.Where(x => x.Naam.ToLower() == tag.ToLower()).SingleOrDefaultAsync();
+                    if (tagObject == null)
+                    {
+                        tagObject = new Tag();
+                        tagObject.Naam = tag;
+
+                        _context.Tags.Add(tagObject);
+                    }
+
+                    var opdrachtTag = await _context.OpdrachtTags.Where(x => (x.TagId == tagObject.Id) && (x.OpdrachtId == opdracht.Id)).SingleOrDefaultAsync();
+                    if (opdrachtTag == null)
+                    {
+                        OpdrachtTag opdrachttag = new OpdrachtTag();
+                        opdrachttag.OpdrachtId = opdracht.Id;
+                        opdrachttag.TagId = tagObject.Id;
+                        _context.OpdrachtTags.Add(opdrachttag);
+                    }
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+
+            return CreatedAtAction("EditOpdracht", new { id = opdracht.Id }, opdracht);
         }
 
         // GET: api/Opdracht

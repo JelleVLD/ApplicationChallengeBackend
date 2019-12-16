@@ -12,5 +12,6 @@ namespace ApplicationChallenge.Models
         public long Id { get; set; }
         public string Voornaam { get; set; }
         public string Achternaam { get; set; }
+        public UserLogin UserLogin { get; set; }
     }
 }

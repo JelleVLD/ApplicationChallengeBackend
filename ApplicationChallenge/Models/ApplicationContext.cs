@@ -45,6 +45,13 @@ namespace ApplicationChallenge.Models
             modelBuilder.Entity<Permission>().ToTable("Permission");
             modelBuilder.Entity<MakerTag>().ToTable("MakerTag");
 
+            modelBuilder.Entity<OpdrachtMaker>()
+                .HasOne(x => x.Opdracht)
+                .WithMany(y => y.OpdrachtMakers)
+                .HasForeignKey(z => z.OpdrachtId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
         }
 
     }
