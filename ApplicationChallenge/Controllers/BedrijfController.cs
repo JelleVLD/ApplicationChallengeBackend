@@ -48,7 +48,6 @@ namespace ApplicationChallenge.Controllers
 
         // PUT: api/Bedrijf/5
         [HttpPut("{id}")]
-        [Permission("Bedrijf.OnPutID")]
         public async Task<IActionResult> PutBedrijf(long id, Bedrijf bedrijf)
         {
             if (id != bedrijf.Id)
