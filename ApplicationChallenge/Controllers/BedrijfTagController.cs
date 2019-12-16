@@ -23,6 +23,7 @@ namespace ApplicationChallenge.Controllers
 
         // GET: api/BedrijfTag
         [HttpGet]
+        [Permission("BedrijfTag.OnGet")]
         public async Task<ActionResult<IEnumerable<BedrijfTag>>> GetBedrijfTags()
         {
             return await _context.BedrijfTags.ToListAsync();
@@ -44,6 +45,7 @@ namespace ApplicationChallenge.Controllers
 
         // PUT: api/BedrijfTag/5
         [HttpPut("{id}")]
+        [Permission("BedrijfTag.OnGetID")]
         public async Task<IActionResult> PutBedrijfTag(long id, BedrijfTag bedrijfTag)
         {
             if (id != bedrijfTag.Id)

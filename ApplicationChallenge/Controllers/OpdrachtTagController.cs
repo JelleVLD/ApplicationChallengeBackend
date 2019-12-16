@@ -32,7 +32,7 @@ namespace ApplicationChallenge.Controllers
         [HttpGet("{id}")][Permission("OpdrachtTag.OnGetBedrijfID")]
         public async Task<ActionResult<IEnumerable<OpdrachtTag>>> GetOpdrachtTags(long id)
         {
-            var opdrachtTags = await _context.OpdrachtTags.Include(t=> t.Tag).Where(o=>o.OpdrachtId == id).ToListAsync();
+            var opdrachtTags = await _context.OpdrachtTags.Include(t=> t.Tag).Where(o=>o.OpdrachtId == id).Where(o => o.TagId != null).ToListAsync();
 
             if (opdrachtTags == null)
             {
@@ -76,17 +76,22 @@ namespace ApplicationChallenge.Controllers
         [HttpPost] [Permission("OpdrachtTag.OnCreate")]
         public async Task<ActionResult<OpdrachtTag>> PostOpdrachtTag(OpdrachtTag opdrachtTag)
         {
-            _context.OpdrachtTags.Add(opdrachtTag);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOpdrachtTag", new { id = opdrachtTag.Id }, opdrachtTag);
+            _context.OpdrachtTags.Add(opdrachtTag);
+
+            if (opdrachtTag.TagId != null)
+            {
+                await _context.SaveChangesAsync();
+            }
+
+            return opdrachtTag;
         }
 
         // DELETE: api/OpdrachtTag/5
         [HttpDelete("{id}")] [Permission("OpdrachtTag.OnDelete")]
         public async Task<ActionResult<IEnumerable<OpdrachtTag>>> DeleteOpdrachtTag(long id)
         {
-            var opdrachtTags = await _context.OpdrachtTags.Where(o=>o.OpdrachtId == id).Include(t=>t.Tag).ToListAsync();
+            var opdrachtTags = await _context.OpdrachtTags.Where(m => m.OpdrachtId == id).ToListAsync();
             if (opdrachtTags == null)
             {
                 return NotFound();
@@ -94,8 +99,6 @@ namespace ApplicationChallenge.Controllers
             foreach (var opdrachtTag in opdrachtTags)
             {
                 _context.OpdrachtTags.Remove(opdrachtTag);
-                _context.Tags.Remove(opdrachtTag.Tag);
-
             }
             await _context.SaveChangesAsync();
 

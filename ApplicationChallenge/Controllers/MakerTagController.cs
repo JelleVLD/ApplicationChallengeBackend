@@ -23,6 +23,7 @@ namespace ApplicationChallenge.Controllers
 
         // GET: api/MakerTag
         [HttpGet]
+        [Permission("MakerTag.OnGet")]
         public async Task<ActionResult<IEnumerable<MakerTag>>> GetMakerTags()
         {
             return await _context.MakerTags.ToListAsync();
@@ -48,6 +49,7 @@ namespace ApplicationChallenge.Controllers
 
         // GET: api/MakerTag/5
         [HttpGet("{id}")]
+        [Permission("MakerTag.OnGetID")]
         public async Task<ActionResult<MakerTag>> GetMakerTag(long id)
         {
             var makerTag = await _context.MakerTags.FindAsync(id);
@@ -61,6 +63,7 @@ namespace ApplicationChallenge.Controllers
         }
 
         [HttpGet("gettags/{id}")]
+        [Permission("MakerTags.OnGetIDIncludeTag")]
         public async Task<ActionResult<IEnumerable<MakerTag>>> GetMakerTags(long id)
         {
             var makerTags = await _context.MakerTags.Include(t => t.Tag).Where(b => b.MakerId == id).ToListAsync();
